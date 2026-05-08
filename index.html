@@ -3,210 +3,272 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HistoQuiz</title>
+<title>HistoQuiz Pro</title>
 <style>
+:root{--bg:#f0f4f8;--card:#fff;--text:#1e293b;--sub:#64748b;--pri:#2563eb;--pri2:#7c3aed;--ok:#16a34a;--no:#dc2626;--brd:#e2e8f0;--sh:0 4px 20px rgba(0,0,0,.06)}
+.dark{--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--sub:#94a3b8;--brd:#334155;--sh:0 4px 20px rgba(0,0,0,.3)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;padding:16px}
-.box{max-width:600px;margin:0 auto}
-h1{text-align:center;font-size:1.5rem;margin-bottom:16px;color:#3b82f6}
-.card{background:#1e293b;border-radius:16px;padding:20px;margin-bottom:16px;border:1px solid #334155}
-.score-row{display:flex;gap:8px;margin-bottom:12px;text-align:center}
-.score-row div{flex:1;background:#1e293b;padding:10px;border-radius:10px;border:1px solid #334155}
-.score-row .n{font-size:1.3rem;font-weight:bold}
-.blue{color:#3b82f6}.green{color:#16a34a}.red{color:#dc2626}
-.prog{height:6px;background:#334155;border-radius:3px;margin-bottom:16px;overflow:hidden}
-.prog-fill{height:100%;background:#3b82f6;border-radius:3px;transition:width .4s}
-.img-box{position:relative;border-radius:12px;overflow:hidden;margin-bottom:16px;background:#000}
-.img-box img{width:100%;max-height:450px;object-fit:contain;display:block}
-.blur-cover{position:absolute;top:0;left:0;right:0;height:17%;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(0,0,0,.1);z-index:2;transition:all .5s}
-.blur-cover.off{backdrop-filter:none;-webkit-backdrop-filter:none;background:transparent}
-.opts{display:grid;gap:8px}
-.opt{padding:14px;border:2px solid #334155;border-radius:12px;background:#1e293b;color:#f1f5f9;font-size:.9rem;cursor:pointer;text-align:left;transition:all .2s}
-.opt:hover{border-color:#3b82f6}
-.opt.correct{border-color:#16a34a;background:rgba(22,163,74,.15)}
-.opt.wrong{border-color:#dc2626;background:rgba(220,38,38,.15)}
-.opt:disabled{cursor:default}
-.fb{margin-top:14px;padding:14px;border-radius:12px;border:1px solid #334155}
-.fb.ok{background:rgba(22,163,74,.1);border-color:#16a34a}
-.fb.no{background:rgba(220,38,38,.1);border-color:#dc2626}
-.fb h4{margin-bottom:4px}
-.fb p{font-size:.82rem;color:#94a3b8;line-height:1.5}
-.btn{width:100%;padding:14px;border:none;border-radius:12px;background:#3b82f6;color:#fff;font-size:1rem;font-weight:bold;cursor:pointer;margin-top:12px}
-.btn:hover{background:#2563eb}
-.btn2{width:100%;padding:14px;border:2px solid #3b82f6;border-radius:12px;background:transparent;color:#3b82f6;font-size:1rem;font-weight:bold;cursor:pointer;margin-top:8px}
-.hide{display:none}
-.rev-item{background:#1e293b;border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid #334155}
-.rev-item.rok{border-left:4px solid #16a34a}
-.rev-item.rno{border-left:4px solid #dc2626}
-.rev-item img{width:100%;max-height:180px;object-fit:contain;border-radius:8px;margin:8px 0}
-.rev-item p{font-size:.8rem;color:#94a3b8;margin:3px 0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:.3s}
+.box{max-width:680px;margin:0 auto;padding:12px}
+
+.hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--card);border-radius:14px;box-shadow:var(--sh);border:1px solid var(--brd);margin-bottom:14px}
+.logo{display:flex;align-items:center;gap:8px}
+.logo-i{width:34px;height:34px;background:linear-gradient(135deg,var(--pri),var(--pri2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.logo span{font-size:1.1rem;font-weight:800;background:linear-gradient(135deg,var(--pri),var(--pri2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hdr-btns{display:flex;gap:5px}
+.hb{width:36px;height:36px;border-radius:10px;border:1px solid var(--brd);background:var(--card);color:var(--text);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:.2s}
+.hb:hover{border-color:var(--pri)}
+.hb.on{background:var(--pri);border-color:var(--pri);color:#fff}
+
+.home-card{background:var(--card);border-radius:20px;padding:36px 20px;box-shadow:var(--sh);border:1px solid var(--brd);text-align:center;position:relative;overflow:hidden}
+.home-card::before{content:'';position:absolute;top:-60%;left:-60%;width:220%;height:220%;background:radial-gradient(circle,rgba(37,99,235,.04) 0%,transparent 70%);pointer-events:none}
+.home-icon{font-size:4rem;margin-bottom:16px;display:inline-block;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.home-card h2{font-size:1.5rem;font-weight:800;margin-bottom:6px}
+.home-card .sub{color:var(--pri);font-weight:600;font-size:.9rem;margin-bottom:14px}
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;text-align:left}
+.feat{display:flex;align-items:center;gap:7px;padding:9px 10px;background:rgba(37,99,235,.04);border-radius:10px;font-size:.78rem;font-weight:500}
+.sbtn{padding:15px 44px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;font-size:1.05rem;font-weight:700;cursor:pointer;transition:.3s;box-shadow:0 4px 15px rgba(37,99,235,.25);position:relative;z-index:1}
+.sbtn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,99,235,.35)}
+.sbtn:active{transform:translateY(0)}
+
+.pi{display:flex;justify-content:space-between;font-size:.78rem;color:var(--sub);margin-bottom:5px;font-weight:500}
+.pb{height:5px;background:var(--brd);border-radius:3px;overflow:hidden;margin-bottom:10px}
+.pf{height:100%;background:linear-gradient(90deg,var(--pri),var(--pri2));border-radius:3px;transition:width .5s}
+.sr{display:flex;gap:6px;margin-bottom:10px}
+.sc{flex:1;background:var(--card);border:1px solid var(--brd);border-radius:11px;padding:10px 6px;text-align:center;box-shadow:var(--sh)}
+.sc .n{font-size:1.3rem;font-weight:800}
+.sc .l{font-size:.6rem;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-top:1px}
+
+.qc{background:var(--card);border-radius:18px;padding:18px;box-shadow:var(--sh);border:1px solid var(--brd);margin-bottom:14px}
+.qc.anim{animation:su .4s ease}
+@keyframes su{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.badge{display:inline-block;padding:3px 10px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border-radius:16px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.qt{font-size:1.05rem;font-weight:700;margin-bottom:14px}
+
+.ib{position:relative;width:100%;border-radius:14px;overflow:hidden;margin-bottom:14px;background:linear-gradient(135deg,#f1f5f9,#e2e8f0);box-shadow:inset 0 2px 8px rgba(0,0,0,.04)}
+.dark .ib{background:linear-gradient(135deg,#1e293b,#0f172a)}
+.ib img{width:100%;min-height:220px;max-height:480px;object-fit:contain;display:block;padding:6px}
+.bl{position:absolute;top:0;left:0;right:0;height:16%;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(0,0,0,.08);z-index:2;pointer-events:none;transition:.6s}
+.bl.off{backdrop-filter:none;-webkit-backdrop-filter:none;background:transparent}
+.bl2{position:absolute;top:38%;left:5%;width:90%;height:16%;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(0,0,0,.04);z-index:2;pointer-events:none;border-radius:10px;transition:.6s}
+.bl2.off{backdrop-filter:none;-webkit-backdrop-filter:none;background:transparent}
+.bl3{position:absolute;bottom:0;left:0;right:0;height:16%;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(0,0,0,.08);z-index:2;pointer-events:none;transition:.6s}
+.bl3.off{backdrop-filter:none;-webkit-backdrop-filter:none;background:transparent}
+.ibadge{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;padding:3px 9px;border-radius:7px;font-size:.68rem;z-index:3;font-weight:600;transition:.3s}
+
+.opts{display:grid;gap:7px}
+.ob{padding:13px 14px;border:2px solid var(--brd);border-radius:13px;background:var(--card);color:var(--text);font-size:.85rem;cursor:pointer;text-align:left;transition:.25s;display:flex;align-items:center;gap:10px;font-weight:500;position:relative;overflow:hidden}
+.ob::before{content:'';position:absolute;top:0;left:0;width:0;height:100%;background:rgba(37,99,235,.04);transition:width .3s}
+.ob:hover:not(:disabled)::before{width:100%}
+.ob:hover:not(:disabled){border-color:var(--pri);transform:translateX(5px)}
+.ob:disabled{cursor:default}
+.ob.ok{border-color:var(--ok);background:rgba(22,163,74,.08);animation:pop .4s}
+.ob.no{border-color:var(--no);background:rgba(220,38,38,.08);animation:shake .4s}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.015)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.ol{width:30px;height:30px;border-radius:9px;background:var(--brd);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0;transition:.3s}
+.ok .ol{background:var(--ok);color:#fff;transform:scale(1.1)}
+.no .ol{background:var(--no);color:#fff}
+
+.fb{margin-top:14px;padding:14px;border-radius:13px;border:1px solid var(--brd);animation:fi .3s}
+.fb.fok{background:rgba(22,163,74,.06);border-color:var(--ok)}
+.fb.fno{background:rgba(220,38,38,.06);border-color:var(--no)}
+.fb h4{margin-bottom:4px;font-size:1rem}
+.fb p{font-size:.78rem;color:var(--sub);line-height:1.55}
+.fb .al{color:var(--text);font-weight:700;font-size:.85rem}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.nbtn{width:100%;padding:14px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:12px;transition:.3s;box-shadow:0 4px 12px rgba(37,99,235,.2)}
+.nbtn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.3)}
+
+.rc{background:var(--card);border-radius:20px;padding:28px 20px;box-shadow:var(--sh);border:1px solid var(--brd);text-align:center;margin-bottom:14px;position:relative;overflow:hidden}
+.rc::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(37,99,235,.04) 0%,transparent 70%);pointer-events:none}
+.rc h2{font-size:1.4rem;margin-bottom:16px;font-weight:800}
+.bs{font-size:3.5rem;font-weight:900;background:linear-gradient(135deg,var(--pri),var(--pri2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:20px 0}
+.rs{padding:14px;border-radius:13px;border:1px solid var(--brd);background:rgba(37,99,235,.02)}
+.rs .rn{font-size:1.4rem;font-weight:800}
+.rs .rl{font-size:.65rem;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.grn{color:var(--ok)}.rd{color:var(--no)}
+
+.bg{display:grid;gap:7px;margin-bottom:14px}
+.wab{padding:13px;border:none;border-radius:13px;background:#25d366;color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s}
+.wab:hover{background:#128c7e;transform:translateY(-1px)}
+.shb{padding:13px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s}
+.shb:hover{transform:translateY(-1px)}
+.reb{padding:13px;border:2px solid var(--pri);border-radius:13px;background:transparent;color:var(--pri);font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s}
+.reb:hover{background:var(--pri);color:#fff}
+
+.rvs h3{font-size:1rem;margin-bottom:10px;font-weight:700}
+.ri{background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:var(--sh)}
+.ri.rok{border-left:4px solid var(--ok)}
+.ri.rno{border-left:4px solid var(--no)}
+.ri img{width:100%;max-height:200px;object-fit:contain;border-radius:9px;margin:6px 0}
+.ri p{font-size:.78rem;color:var(--sub);margin:3px 0;line-height:1.5}
+
+.hide{display:none!important}
+.conf{position:fixed;top:-10px;z-index:999;pointer-events:none;animation:cf 3s linear forwards}
+@keyframes cf{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+.timer{font-family:monospace;font-size:.82rem;color:var(--sub);font-weight:600}
 </style>
 </head>
 <body>
 <div class="box">
-<h1>🔬 HistoQuiz</h1>
-<div id="home">
-<div class="card" style="text-align:center">
-<div style="font-size:3rem;margin-bottom:12px">🔬</div>
-<h2 style="margin-bottom:8px">Histology Quiz</h2>
-<p style="color:#94a3b8;margin-bottom:8px">Blood Film Identification</p>
-<p style="color:#94a3b8;font-size:.85rem;margin-bottom:20px">5 MCQ Questions • Instant Feedback • Score + Review</p>
-<button class="btn" onclick="start()">▶️ Start Quiz</button>
+<div class="hdr">
+<div class="logo"><div class="logo-i">🔬</div><span>HistoQuiz</span></div>
+<div class="hdr-btns">
+<button class="hb" onclick="tt()" id="tb">⏱</button>
+<button class="hb" onclick="td()" id="db">🌙</button>
 </div>
 </div>
-<div id="quiz" class="hide">
-<div style="font-size:.82rem;color:#94a3b8;margin-bottom:4px">Question <span id="qn">1</span>/5</div>
-<div class="prog"><div class="prog-fill" id="pf" style="width:0%"></div></div>
-<div class="score-row">
-<div><div class="n blue" id="sc">0</div><div style="font-size:.65rem;color:#94a3b8">Score</div></div>
-<div><div class="n green" id="cr">0</div><div style="font-size:.65rem;color:#94a3b8">Correct</div></div>
-<div><div class="n red" id="wr">0</div><div style="font-size:.65rem;color:#94a3b8">Wrong</div></div>
+<div id="H">
+<div class="home-card">
+<div class="home-icon">🔬</div>
+<h2>Histology Practical Quiz</h2>
+<div class="sub">Blood Film Identification</div>
+<div class="feats">
+<div class="feat">📸 5 Questions</div>
+<div class="feat">🎯 MCQ Format</div>
+<div class="feat">⚡ Instant Feedback</div>
+<div class="feat">📊 Score + Review</div>
+<div class="feat">🔍 Blur Labels</div>
+<div class="feat">🏆 Share Results</div>
 </div>
-<div class="card">
-<div style="font-size:.8rem;color:#94a3b8;margin-bottom:4px">Identify the tissue/cell:</div>
-<div style="font-weight:bold;margin-bottom:12px">What is this tissue/cell?</div>
-<div class="img-box">
-<img id="qi" src="" alt="slide">
-<div class="blur-cover" id="bl"></div>
+<button class="sbtn" onclick="go()">▶️ Start Quiz</button>
 </div>
-<div class="opts" id="opts"></div>
+</div>
+<div id="G" class="hide">
+<div class="pi"><span>Question <span id="qn">1</span> of 5</span><span class="timer" id="tm"></span></div>
+<div class="pb"><div class="pf" id="pf"></div></div>
+<div class="sr">
+<div class="sc"><div class="n" style="color:var(--pri)" id="s1">0</div><div class="l">Score</div></div>
+<div class="sc"><div class="n grn" id="s2">0</div><div class="l">Correct</div></div>
+<div class="sc"><div class="n rd" id="s3">0</div><div class="l">Wrong</div></div>
+</div>
+<div class="qc" id="QC">
+<div class="badge">🔍 Identify</div>
+<div class="qt">What is this tissue / cell?</div>
+<div class="ib">
+<img id="qi" src="">
+<div class="bl" id="b1"></div>
+<div class="bl2" id="b2"></div>
+<div class="bl3" id="b3"></div>
+<div class="ibadge" id="ib">🔍 Identify</div>
+</div>
+<div class="opts" id="op"></div>
 <div id="fb" class="hide"></div>
-<button class="btn hide" id="nb" onclick="next()">Next →</button>
+<button class="nbtn hide" id="nb" onclick="nx()">Next Question →</button>
 </div>
 </div>
-<div id="res" class="hide">
-<div class="card" style="text-align:center">
+<div id="R" class="hide">
+<div class="rc">
 <h2>🎉 Quiz Complete!</h2>
-<div style="font-size:3rem;font-weight:900;color:#3b82f6;margin:12px 0" id="fs">0%</div>
-<div class="score-row">
-<div><div class="n" id="rt">0</div><div style="font-size:.65rem;color:#94a3b8">Total</div></div>
-<div><div class="n green" id="rc">0</div><div style="font-size:.65rem;color:#94a3b8">Correct</div></div>
-<div><div class="n red" id="rw">0</div><div style="font-size:.65rem;color:#94a3b8">Wrong</div></div>
+<div class="bs" id="fs">0%</div>
+<div class="rg">
+<div class="rs"><div class="rn" id="r1">0</div><div class="rl">Total</div></div>
+<div class="rs"><div class="rn grn" id="r2">0</div><div class="rl">Correct</div></div>
+<div class="rs"><div class="rn rd" id="r3">0</div><div class="rl">Wrong</div></div>
 </div>
-<div id="msg" style="font-size:1.2rem;font-weight:bold;margin-top:8px"></div>
+<div id="ms" style="font-size:1.2rem;font-weight:800;margin-top:8px"></div>
 </div>
-<button class="btn" onclick="swa()">📱 Share WhatsApp</button>
-<button class="btn2" onclick="re()">🔄 Try Again</button>
-<h3 style="margin-top:20px;margin-bottom:12px">📝 Review</h3>
+<div class="bg">
+<button class="wab" onclick="sw()">📱 Share on WhatsApp</button>
+<button class="shb" onclick="ss()">📤 Copy Results</button>
+<button class="reb" onclick="re()">🔄 Try Again</button>
+</div>
+<div class="rvs">
+<h3>📝 Review All Questions</h3>
 <div id="rv"></div>
 </div>
 </div>
+</div>
 <script>
-var B='https://raw.githubusercontent.com/kemokeko511-ai/Hisoquiz/main/';
-var D=[
-{i:'Img1.jpg',l:'Blood film small lymphocyte',e:'Small round cell with dense dark nucleus occupying most of the cell, thin rim of basophilic cytoplasm. Smallest WBC.'},
-{i:'Img2.jpg',l:'Blood film large lymphocyte',e:'Larger than small lymphocyte with more abundant pale blue cytoplasm. Round nucleus with less condensed chromatin.'},
-{i:'Img3.jpg',l:'Blood film small & large lymphocytes',e:'Comparison: small has minimal cytoplasm with dense nucleus, large has more cytoplasm and open chromatin.'},
-{i:'Img4.jpg',l:'Blood film monocyte',e:'Largest WBC. Kidney/horseshoe-shaped nucleus, abundant pale blue-grey cytoplasm with fine granules.'},
-{i:'Img5.jpg',l:'Blood film leucocytes',e:'Mixed WBCs among RBCs. Neutrophils, eosinophils, lymphocytes, and monocytes visible.'}
+var U='https://raw.githubusercontent.com/kemokeko511-ai/Hisoquiz/main/';
+var DA=[
+{i:'Img1.jpg',l:'Blood film small lymphocyte',e:'Small round cell with dense dark nucleus occupying most of the cell. Very thin rim of basophilic cytoplasm. Smallest WBC with highest N:C ratio.'},
+{i:'Img2.jpg',l:'Blood film large lymphocyte',e:'Larger cell with more abundant pale blue cytoplasm. Round nucleus with less condensed (euchromatic) chromatin. May contain azurophilic granules.'},
+{i:'Img3.jpg',l:'Blood film small & large lymphocytes',e:'Side-by-side comparison showing size difference. Small has minimal cytoplasm + dense nucleus. Large has more cytoplasm + open chromatin.'},
+{i:'Img4.jpg',l:'Blood film monocyte',e:'Largest WBC in blood. Kidney/horseshoe-shaped nucleus with lacy chromatin. Abundant pale blue-grey cytoplasm. Precursor of tissue macrophages.'},
+{i:'Img5.jpg',l:'Blood film leucocytes',e:'Overview of mixed WBCs among RBCs. Neutrophils (multilobed), eosinophils (bilobed + red granules), lymphocytes (round dark nucleus), monocytes (kidney nucleus).'}
 ];
 var Q=[],C=0,S=0,CC=0,WC=0,A=[],AN=false;
+var TO=false,TS=0,TI=null;
+function td(){document.documentElement.classList.toggle('dark');document.getElementById('db').textContent=document.documentElement.classList.contains('dark')?'☀️':'🌙'}
+function tt(){TO=!TO;var b=document.getElementById('tb');b.classList.toggle('on',TO);if(TO){TS=0;TI=setInterval(function(){TS++;var m=Math.floor(TS/60);var s=TS%60;document.getElementById('tm').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s},1000)}else{clearInterval(TI);document.getElementById('tm').textContent=''}}
 function sh(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
-function start(){
-var al=D.map(function(x){return x.l});
-Q=[];
-var sd=D.slice();
-sh(sd);
-for(var k=0;k<sd.length;k++){
-var it=sd[k];
-var co=it.l;
-var wr=al.filter(function(x){return x!==co});
-sh(wr);
-wr=wr.slice(0,3);
-var op=wr.concat([co]);
-sh(op);
-Q.push({src:B+it.i,l:co,e:it.e,o:op,ci:op.indexOf(co)});
-}
+function cf(){var co=['#2563eb','#7c3aed','#16a34a','#f59e0b','#ec4899','#06b6d4','#f97316'];for(var i=0;i<25;i++){var c=document.createElement('div');c.className='conf';c.style.left=Math.random()*100+'vw';var sz=Math.random()*8+4;c.style.width=sz+'px';c.style.height=sz+'px';c.style.background=co[Math.floor(Math.random()*co.length)];c.style.borderRadius=Math.random()>.5?'50%':'2px';c.style.animationDuration=(Math.random()*2+2)+'s';c.style.animationDelay=(Math.random()*.5)+'s';document.body.appendChild(c);setTimeout(function(){c.remove()},4500)}}
+function go(){
+var al=DA.map(function(x){return x.l});Q=[];var sd=DA.slice();sh(sd);
+for(var k=0;k<sd.length;k++){var it=sd[k];var co=it.l;var wr=al.filter(function(x){return x!==co});sh(wr);wr=wr.slice(0,3);var op=wr.concat([co]);sh(op);Q.push({src:U+it.i,l:co,e:it.e,o:op,ci:op.indexOf(co)})}
 C=0;S=0;CC=0;WC=0;A=[];
-document.getElementById('home').className='hide';
-document.getElementById('quiz').className='';
-load();
-}
-function load(){
-AN=false;
-var q=Q[C];
+document.getElementById('H').className='hide';document.getElementById('G').className='';ld()}
+function ld(){
+AN=false;var q=Q[C];
 document.getElementById('qn').textContent=C+1;
 document.getElementById('pf').style.width=(C/Q.length*100)+'%';
-document.getElementById('sc').textContent=S;
-document.getElementById('cr').textContent=CC;
-document.getElementById('wr').textContent=WC;
+document.getElementById('s1').textContent=S;
+document.getElementById('s2').textContent=CC;
+document.getElementById('s3').textContent=WC;
 document.getElementById('qi').src=q.src;
-document.getElementById('bl').classList.remove('off');
-var od=document.getElementById('opts');
-od.innerHTML='';
+document.getElementById('b1').classList.remove('off');
+document.getElementById('b2').classList.remove('off');
+document.getElementById('b3').classList.remove('off');
+document.getElementById('ib').textContent='🔍 Identify';
+document.getElementById('ib').style.background='rgba(0,0,0,.6)';
+var qc=document.getElementById('QC');qc.classList.remove('anim');void qc.offsetHeight;qc.classList.add('anim');
+var od=document.getElementById('op');od.innerHTML='';
 var lt=['A','B','C','D'];
 for(var i=0;i<q.o.length;i++){
-var b=document.createElement('button');
-b.className='opt';
-b.textContent=lt[i]+') '+q.o[i];
+var b=document.createElement('button');b.className='ob';
+b.innerHTML='<span class="ol">'+lt[i]+'</span><span>'+q.o[i]+'</span>';
 b.setAttribute('data-i',i);
-b.onclick=function(){pick(parseInt(this.getAttribute('data-i')))};
-od.appendChild(b);
-}
+b.onclick=function(){pk(parseInt(this.getAttribute('data-i')))};
+od.appendChild(b)}
 document.getElementById('fb').className='hide';
-document.getElementById('nb').className='btn hide';
-}
-function pick(idx){
-if(AN)return;
-AN=true;
-var q=Q[C];
-var ok=idx===q.ci;
-if(ok){S++;CC++}else{WC++}
-document.getElementById('bl').classList.add('off');
-document.getElementById('sc').textContent=S;
-document.getElementById('cr').textContent=CC;
-document.getElementById('wr').textContent=WC;
-var bs=document.querySelectorAll('.opt');
-for(var i=0;i<bs.length;i++){
-bs[i].disabled=true;
-if(i===q.ci)bs[i].classList.add('correct');
-if(i===idx&&!ok)bs[i].classList.add('wrong');
-}
+document.getElementById('nb').className='nbtn hide'}
+function pk(idx){
+if(AN)return;AN=true;var q=Q[C];var ok=idx===q.ci;
+if(ok){S++;CC++;cf()}else{WC++;if(navigator.vibrate)navigator.vibrate(200)}
+document.getElementById('b1').classList.add('off');
+document.getElementById('b2').classList.add('off');
+document.getElementById('b3').classList.add('off');
+document.getElementById('ib').textContent='✅ '+q.l;
+document.getElementById('ib').style.background='rgba(22,163,74,.85)';
+document.getElementById('s1').textContent=S;
+document.getElementById('s2').textContent=CC;
+document.getElementById('s3').textContent=WC;
+var bs=document.querySelectorAll('.ob');
+for(var i=0;i<bs.length;i++){bs[i].disabled=true;if(i===q.ci)bs[i].classList.add('ok');if(i===idx&&!ok)bs[i].classList.add('no')}
 var f=document.getElementById('fb');
-f.className='fb '+(ok?'ok':'no');
-f.innerHTML='<h4>'+(ok?'✅ Correct!':'❌ Incorrect')+'</h4><p><b>'+q.l+'</b></p><p>'+q.e+'</p>';
+f.className='fb '+(ok?'fok':'fno');
+f.innerHTML='<h4>'+(ok?'✅ Correct! Well done!':'❌ Incorrect')+'</h4><p class="al">'+q.l+'</p><p>'+q.e+'</p>';
 A.push({l:q.l,s:q.o[idx],ok:ok,src:q.src,e:q.e});
-var nb=document.getElementById('nb');
-nb.className='btn';
-nb.textContent=C+1>=Q.length?'📊 Results':'Next →';
-}
-function next(){
-C++;
-if(C>=Q.length){results()}else{load()}
-}
-function results(){
-document.getElementById('quiz').className='hide';
-document.getElementById('res').className='';
-var t=Q.length;
-var p=Math.round(CC/t*100);
+var nb=document.getElementById('nb');nb.className='nbtn';
+nb.textContent=C+1>=Q.length?'📊 View Results':'Next Question →'}
+function nx(){C++;if(C>=Q.length){rs()}else{ld()}}
+function rs(){
+if(TI)clearInterval(TI);
+document.getElementById('G').className='hide';
+document.getElementById('R').className='';
+var t=Q.length;var p=Math.round(CC/t*100);
 document.getElementById('fs').textContent=p+'%';
-document.getElementById('rt').textContent=t;
-document.getElementById('rc').textContent=CC;
-document.getElementById('rw').textContent=WC;
-var m=document.getElementById('msg');
-if(p>=80){m.textContent='🏆 Excellent!';m.style.color='#16a34a'}
-else if(p>=60){m.textContent='👍 Good!';m.style.color='#3b82f6'}
-else{m.textContent='💪 Try again!';m.style.color='#dc2626'}
-var rv=document.getElementById('rv');
-rv.innerHTML='';
-for(var i=0;i<A.length;i++){
-var a=A[i];
-var d=document.createElement('div');
-d.className='rev-item '+(a.ok?'rok':'rno');
-d.innerHTML='<p><b>Q'+(i+1)+':</b> '+(a.ok?'✅':'❌')+' '+a.l+'</p><img src="'+a.src+'"><p>You: <b>'+a.s+'</b></p><p>Correct: <b style="color:#16a34a">'+a.l+'</b></p><p>'+a.e+'</p>';
-rv.appendChild(d);
-}
-}
-function swa(){
-var t=Q.length;
-var p=Math.round(CC/t*100);
-var tx='🔬 HistoQuiz: '+CC+'/'+t+' ('+p+'%)'+'\nTry: https://kemokeko511-ai.github.io/Hisoquiz';
-window.open('https://wa.me/?text='+encodeURIComponent(tx));
-}
-function re(){
-document.getElementById('res').className='hide';
-document.getElementById('home').className='';
-}
+document.getElementById('r1').textContent=t;
+document.getElementById('r2').textContent=CC;
+document.getElementById('r3').textContent=WC;
+var m=document.getElementById('ms');
+if(p>=80){m.textContent='🏆 Excellent!';m.style.color='var(--ok)';cf()}
+else if(p>=60){m.textContent='👍 Good job!';m.style.color='var(--pri)'}
+else if(p>=40){m.textContent='📚 Keep studying!';m.style.color='#f59e0b'}
+else{m.textContent='💪 Try again!';m.style.color='var(--no)'}
+var rv=document.getElementById('rv');rv.innerHTML='';
+for(var i=0;i<A.length;i++){var a=A[i];var d=document.createElement('div');
+d.className='ri '+(a.ok?'rok':'rno');
+d.innerHTML='<p><strong>Q'+(i+1)+':</strong> '+(a.ok?'✅':'❌')+' '+a.l+'</p><img src="'+a.src+'"><p>Your answer: <strong>'+a.s+'</strong></p><p>Correct: <strong style="color:var(--ok)">'+a.l+'</strong></p><p style="margin-top:4px">'+a.e+'</p>';
+rv.appendChild(d)}}
+function sw(){var t=Q.length;var p=Math.round(CC/t*100);var tx='🔬 *HistoQuiz Pro Result*%0A✅ '+CC+'/'+t+' correct ('+p+'%)%0A%0A🧪 Try it yourself:%0Ahttps://kemokeko511-ai.github.io/Hisoquiz';window.open('https://wa.me/?text='+tx)}
+function ss(){var t=Q.length;var p=Math.round(CC/t*100);var tx='🔬 HistoQuiz: '+CC+'/'+t+' ('+p+'%)\nTry: https://kemokeko511-ai.github.io/Hisoquiz';if(navigator.share){navigator.share({title:'HistoQuiz',text:tx})}else if(navigator.clipboard){navigator.clipboard.writeText(tx).then(function(){alert('✅ Copied!')})}}
+function re(){document.getElementById('R').className='hide';document.getElementById('H').className=''}
 </script>
 </body>
 </html>
