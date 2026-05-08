@@ -15,20 +15,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .header-btns{display:flex;gap:8px}
 .btn-sm{padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:.8rem;transition:all .2s}
 .btn-sm:hover{border-color:var(--primary)}
-.upload-zone{border:3px dashed var(--border);border-radius:16px;padding:48px 24px;text-align:center;background:var(--card);box-shadow:var(--shadow);transition:all .3s;cursor:pointer}
-.upload-zone:hover{border-color:var(--primary);transform:translateY(-2px)}
-.upload-zone.drag{border-color:var(--primary);background:rgba(37,99,235,.05)}
-.upload-icon{font-size:3rem;margin-bottom:16px}
-.upload-zone h2{font-size:1.3rem;margin-bottom:8px}
-.upload-zone p{color:var(--muted);font-size:.9rem}
-.file-input{display:none}
-.upload-info{margin-top:24px;padding:16px;background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow)}
-.upload-info h3{font-size:1rem;margin-bottom:8px;color:var(--primary)}
-.upload-info p{font-size:.85rem;color:var(--muted);line-height:1.6}
-.loading{text-align:center;padding:48px}
-.spinner{width:48px;height:48px;border:4px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading p{color:var(--muted)}
+.welcome{background:var(--card);border-radius:16px;padding:32px 20px;box-shadow:var(--shadow);border:1px solid var(--border);text-align:center}
+.welcome h2{font-size:1.4rem;margin-bottom:12px}
+.welcome p{color:var(--muted);font-size:.9rem;margin-bottom:20px;line-height:1.6}
+.start-btn{padding:16px 32px;border:none;border-radius:12px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all .2s}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(37,99,235,.3)}
 .progress-section{margin-bottom:16px}
 .progress-info{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);margin-bottom:6px}
 .progress-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
@@ -43,9 +34,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .q-title{font-size:1.15rem;font-weight:600;margin-bottom:16px}
 .img-container{position:relative;width:100%;margin-bottom:16px;border-radius:12px;overflow:hidden;background:#000}
 .img-container img{width:100%;max-height:400px;object-fit:contain;display:block}
-.blur-overlay{position:absolute;top:0;left:0;right:0;height:18%;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(255,255,255,.15);z-index:2;pointer-events:none}
-.blur-overlay-mid{position:absolute;top:35%;left:10%;width:80%;height:20%;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(255,255,255,.1);z-index:2;pointer-events:none;border-radius:8px}
-.blur-overlay-bot{position:absolute;bottom:0;left:0;right:0;height:18%;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(255,255,255,.15);z-index:2;pointer-events:none}
+.blur-overlay{position:absolute;top:0;left:0;right:0;height:15%;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(0,0,0,.1);z-index:2;pointer-events:none}
 .options{display:grid;gap:10px}
 .opt-btn{padding:14px 16px;border:2px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);font-size:.95rem;cursor:pointer;text-align:left;transition:all .2s;display:flex;align-items:center;gap:10px}
 .opt-btn:hover:not(:disabled){border-color:var(--primary);transform:translateX(4px)}
@@ -93,29 +82,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <button class="btn-sm" onclick="toggleDark()">🌙 Dark</button>
 </div>
 </div>
-<div id="uploadScreen">
-<div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
-<div class="upload-icon">📂</div>
-<h2>Upload Histology Images</h2>
-<p>Tap to select images (JPG, PNG)</p>
-<p style="margin-top:8px;font-size:.8rem;color:var(--primary)">Select multiple images at once</p>
-</div>
-<input type="file" id="fileInput" class="file-input" multiple accept="image/*" onchange="handleFiles(this.files)">
-<div class="upload-info">
-<h3>📋 How it works</h3>
-<p>1. Name each image file with the tissue name<br>Example: <code>Thin skin.jpg</code>, <code>Spleen.jpg</code><br><br>2. Upload all images<br>3. Quiz starts automatically<br>4. Labels are blurred during quiz<br>5. Get instant feedback + final score</p>
-</div>
-</div>
-<div id="loadingScreen" class="hidden">
-<div class="loading">
-<div class="spinner"></div>
-<p id="loadingText">Processing images...</p>
+<div id="welcomeScreen">
+<div class="welcome">
+<div style="font-size:3rem;margin-bottom:16px">🔬</div>
+<h2>Histology Practical Quiz</h2>
+<p>5 MCQ Questions<br>Blood Film Identification<br>Instant feedback after each question<br>Score + Review at the end</p>
+<button class="start-btn" onclick="startQuiz()">▶️ Start Quiz</button>
 </div>
 </div>
 <div id="quizScreen" class="hidden">
 <div class="progress-section">
 <div class="progress-info">
-<span>Question <span id="qNum">1</span> of <span id="qTotal">0</span></span>
+<span>Question <span id="qNum">1</span> of <span id="qTotal">5</span></span>
 <span class="timer-display" id="timerDisplay"></span>
 </div>
 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -128,11 +106,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="question-card">
 <div class="q-header">Identify the tissue/cell:</div>
 <div class="q-title">What is this tissue/cell?</div>
-<div class="img-container" id="imgContainer">
+<div class="img-container">
 <img id="quizImg" src="" alt="Histology slide">
-<div class="blur-overlay" id="blurTop"></div>
-<div class="blur-overlay-mid hidden" id="blurMid"></div>
-<div class="blur-overlay-bot" id="blurBot"></div>
+<div class="blur-overlay"></div>
 </div>
 <div class="options" id="optionsDiv"></div>
 <div id="feedbackDiv" class="hidden"></div>
@@ -151,7 +127,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div id="passFailMsg" style="font-size:1.2rem;font-weight:700;margin-top:8px"></div>
 </div>
 <button class="next-btn" onclick="shareResults()">📤 Share Results</button>
-<button class="restart-btn" onclick="restart()">🔄 New Quiz</button>
+<button class="restart-btn" onclick="restartQuiz()">🔄 Try Again</button>
 <div class="review-section">
 <h3>📝 Review All Questions</h3>
 <div id="reviewList"></div>
@@ -159,16 +135,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 </div>
 <script>
-let images=[];let questions=[];let currentQ=0;let score=0;let correctCount=0;let wrongCount=0;let answers=[];let timerOn=false;let timerSeconds=0;let timerInterval=null;
+const BASE='https://raw.githubusercontent.com/kemokeko511-ai/Hisoquiz/main/';
+const DATA=[
+{img:'Img1.jpg',label:'Blood film small lymphocyte',explanation:'Small round cell with dense dark nucleus occupying most of the cell, thin rim of basophilic cytoplasm. Smallest WBC in blood film.'},
+{img:'Img2.jpg',label:'Blood film large lymphocyte',explanation:'Larger than small lymphocyte with more abundant pale blue cytoplasm, round nucleus with less condensed chromatin.'},
+{img:'Img3.jpg',label:'Blood film small & large lymphocytes',explanation:'Comparison showing size difference - small lymphocyte has minimal cytoplasm with dense nucleus, large has more cytoplasm and open chromatin.'},
+{img:'Img4.jpg',label:'Blood film monocyte',explanation:'Largest WBC in blood film. Has kidney/horseshoe-shaped nucleus, abundant pale blue-grey cytoplasm with fine granules.'},
+{img:'Img5.jpg',label:'Blood film leucocytes',explanation:'Mixed WBCs visible among RBCs - includes neutrophils (multilobed nucleus), eosinophils (bilobed, red granules), basophils, lymphocytes, and monocytes.'}
+];
+let questions=[];let currentQ=0;let score=0;let correctCount=0;let wrongCount=0;let answers=[];let timerOn=false;let timerSeconds=0;let timerInterval=null;
 function toggleDark(){document.documentElement.classList.toggle('dark')}
-function toggleTimer(){timerOn=!timerOn;document.getElementById('timerToggle').style.background=timerOn?'var(--primary)':'var(--card)';document.getElementById('timerToggle').style.color=timerOn?'#fff':'var(--text)';if(timerOn){timerSeconds=0;timerInterval=setInterval(()=>{timerSeconds++;const m=Math.floor(timerSeconds/60);const s=timerSeconds%60;document.getElementById('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')},1000)}else{clearInterval(timerInterval);document.getElementById('timerDisplay').textContent=''}}
-function handleFiles(fileList){if(!fileList.length)return;showScreen('loading');images=[];let loaded=0;const total=fileList.length;for(let f of fileList){if(!f.type.startsWith('image/')){loaded++;if(loaded>=total)finishLoading();continue}const label=cleanLabel(f.name);const reader=new FileReader();reader.onload=(e)=>{if(!images.find(im=>im.label===label)){images.push({src:e.target.result,label:label})}loaded++;document.getElementById('loadingText').textContent='Processing '+loaded+'/'+total+' images...';if(loaded>=total)finishLoading()};reader.readAsDataURL(f)}}
-function cleanLabel(filename){let name=filename.replace(/\.[^.]+$/,'');name=name.replace(/[-_]/g,' ');name=name.replace(/\b(img|image|photo|pic)\d*\b/gi,'');name=name.trim();if(!name)name='Unknown tissue';return name}
-function finishLoading(){if(images.length<2){alert('Need at least 2 different images with unique names!\\n\\nName your files like:\\nThin skin.jpg\\nSpleen.jpg\\nCardiac muscle.jpg');showScreen('upload');return}buildQuiz();showScreen('quiz')}
-function buildQuiz(){const allLabels=images.map(im=>im.label);questions=[];let shuffled=[...images];shuffle(shuffled);for(let im of shuffled){const correct=im.label;let wrongs=allLabels.filter(l=>l!==correct);shuffle(wrongs);wrongs=wrongs.slice(0,3);const fallback=['Hyaline cartilage','Compact bone','Liver lobule','Kidney cortex','Adipose tissue','Elastic cartilage','Simple columnar epithelium','Stratified squamous epithelium'];while(wrongs.length<3){const fb=fallback.find(f=>f!==correct&&!wrongs.includes(f));if(fb)wrongs.push(fb);else break}let options=[...wrongs,correct];shuffle(options);questions.push({imgSrc:im.src,label:correct,options:options,correctIndex:options.indexOf(correct)})}currentQ=0;score=0;correctCount=0;wrongCount=0;answers=[];loadQuestion()}
-function loadQuestion(){const q=questions[currentQ];document.getElementById('qNum').textContent=currentQ+1;document.getElementById('qTotal').textContent=questions.length;document.getElementById('progressFill').style.width=((currentQ/questions.length)*100)+'%';document.getElementById('scoreDisplay').textContent=score;document.getElementById('correctDisplay').textContent=correctCount;document.getElementById('wrongDisplay').textContent=wrongCount;document.getElementById('quizImg').src=q.imgSrc;document.getElementById('blurMid').classList.remove('hidden');const optDiv=document.getElementById('optionsDiv');optDiv.innerHTML='';const letters=['A','B','C','D'];q.options.forEach((opt,i)=>{const btn=document.createElement('button');btn.className='opt-btn';btn.innerHTML='<span class="opt-letter">'+letters[i]+'</span><span>'+opt+'</span>';btn.onclick=()=>selectAnswer(i);optDiv.appendChild(btn)});document.getElementById('feedbackDiv').className='hidden';document.getElementById('nextBtn').className='next-btn hidden'}
-function selectAnswer(idx){const q=questions[currentQ];const isCorrect=idx===q.correctIndex;if(isCorrect){score++;correctCount++}else{wrongCount++}document.getElementById('scoreDisplay').textContent=score;document.getElementById('correctDisplay').textContent=correctCount;document.getElementById('wrongDisplay').textContent=wrongCount;const btns=document.querySelectorAll('.opt-btn');btns.forEach((btn,i)=>{btn.disabled=true;if(i===q.correctIndex)btn.classList.add('correct');if(i===idx&&!isCorrect)btn.classList.add('wrong')});const fb=document.getElementById('feedbackDiv');fb.className='feedback '+(isCorrect?'correct-fb':'wrong-fb');fb.innerHTML='<h4>'+(isCorrect?'✅ Correct!':'❌ Incorrect')+'</h4><p><strong>Answer:</strong> '+q.label+'</p><p>'+getExplanation(q.label)+'</p>';answers.push({label:q.label,selected:q.options[idx],correct:isCorrect,options:q.options,imgSrc:q.imgSrc});const nextBtn=document.getElementById('nextBtn');nextBtn.className='next-btn';nextBtn.textContent=currentQ+1>=questions.length?'📊 View Results':'Next Question →'}
+function toggleTimer(){timerOn=!timerOn;const btn=document.getElementById('timerToggle');btn.style.background=timerOn?'var(--primary)':'var(--card)';btn.style.color=timerOn?'#fff':'var(--text)';if(timerOn){timerSeconds=0;timerInterval=setInterval(()=>{timerSeconds++;const m=Math.floor(timerSeconds/60);const s=timerSeconds%60;document.getElementById('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')},1000)}else{clearInterval(timerInterval);document.getElementById('timerDisplay').textContent=''}}
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
+function startQuiz(){const allLabels=DATA.map(d=>d.label);questions=[];let shuffled=[...DATA];shuffle(shuffled);for(let item of shuffled){const correct=item.label;let wrongs=allLabels.filter(l=>l!==correct);shuffle(wrongs);wrongs=wrongs.slice(0,3);let options=[...wrongs,correct];shuffle(options);questions.push({imgSrc:BASE+item.img,label:correct,explanation:item.explanation,options:options,correctIndex:options.indexOf(correct)})}currentQ=0;score=0;correctCount=0;wrongCount=0;answers=[];document.getElementById('welcomeScreen').classList.add('hidden');document.getElementById('quizScreen').classList.remove('hidden');loadQuestion()}
+function loadQuestion(){const q=questions[currentQ];document.getElementById('qNum').textContent=currentQ+1;document.getElementById('qTotal').textContent=questions.length;document.getElementById('progressFill').style.width=((currentQ/questions.length)*100)+'%';document.getElementById('scoreDisplay').textContent=score;document.getElementById('correctDisplay').textContent=correctCount;document.getElementById('wrongDisplay').textContent=wrongCount;document.getElementById('quizImg').src=q.imgSrc;const optDiv=document.getElementById('optionsDiv');optDiv.innerHTML='';const letters=['A','B','C','D'];q.options.forEach((opt,i)=>{const btn=document.createElement('button');btn.className='opt-btn';btn.innerHTML='<span class="opt-letter">'+letters[i]+'</span><span>'+opt+'</span>';btn.onclick=()=>selectAnswer(i);optDiv.appendChild(btn)});document.getElementById('feedbackDiv').className='hidden';document.getElementById('nextBtn').className='next-btn hidden'}
+function selectAnswer(idx){const q=questions[currentQ];const isCorrect=idx===q.correctIndex;if(isCorrect){score++;correctCount++}else{wrongCount++}document.getElementById('scoreDisplay').textContent=score;document.getElementById('correctDisplay').textContent=correctCount;document.getElementById('wrongDisplay').textContent=wrongCount;const btns=document.querySelectorAll('.opt-btn');btns.forEach((btn,i)=>{btn.disabled=true;if(i===q.correctIndex)btn.classList.add('correct');if(i===idx&&!isCorrect)btn.classList.add('wrong')});const fb=document.getElementById('feedbackDiv');fb.className='feedback '+(isCorrect?'correct-fb':'wrong-fb');fb.innerHTML='<h4>'+(isCorrect?'✅ Correct!':'❌ Incorrect')+'</h4><p><strong>Answer:</strong> '+q.label+'</p><p>'+q.explanation+'</p>';answers.push({label:q.label,selected:q.options[idx],correct:isCorrect,imgSrc:q.imgSrc,explanation:q.explanation});const nextBtn=document.getElementById('nextBtn');nextBtn.className='next-btn';nextBtn.textContent=currentQ+1>=questions.length?'📊 View Results':'Next Question →'}
 function nextQuestion(){currentQ++;if(currentQ>=questions.length){showResults()}else{loadQuestion()}}
-function getExplanation(label){const ex={'Thin skin':'Thin skin has thin epidermis with 4 layers, contains hair follicles and sebaceous glands.','Thick skin of palm':'Thick skin has 5 epidermal layers including stratum lucidum, very thick stratum corneum, no hair follicles.','Thick skin of sole':'Similar to palm - 5 epidermal layers, prominent stratum lucidum, very thick cornified layer.','Palatine Tonsil':'Lined by stratified squamous non-keratinized epithelium with deep crypts and lymphoid follicles.','Lingual Tonsil':'Located at root of tongue, has shallow crypts, underlying skeletal muscle and seromucous glands.','Pharyngeal Tonsil':'Covered by pseudostratified ciliated columnar epithelium (respiratory), located in nasopharynx.','Spleen':'Shows white pulp (lymphoid follicles with central arteriole) and red pulp (sinusoids with RBCs).','Lymph node':'Encapsulated lymphoid organ with cortex (follicles), paracortex (T cells), and medulla.','Blood film leucocytes':'Mixed WBCs visible among RBCs including neutrophils, eosinophils, lymphocytes, monocytes.','Blood film small lymphocyte':'Small round cell with dense dark nucleus and thin rim of basophilic cytoplasm.','Blood film large lymphocyte':'Larger than small lymphocyte, more cytoplasm, round nucleus with less condensed chromatin.','Blood film monocyte':'Largest WBC, kidney-shaped nucleus, abundant pale blue-grey cytoplasm.','Blood film small & large lymphocytes':'Size comparison - small has minimal cytoplasm, large has more abundant cytoplasm.','TS Skeletal Muscle':'Transverse section shows polygonal muscle fibers with peripheral nuclei in fascicles.','LS Skeletal Muscle':'Longitudinal section shows parallel fibers with cross-striations and peripheral nuclei.','Myotendinous junction':'Transition zone where skeletal muscle fibers attach to dense connective tissue tendon.','Cardiac muscle':'Branching fibers with central nuclei, intercalated discs, and cross-striations.','Smooth muscle':'Spindle-shaped cells with central elongated nucleus, no striations.','Nerve cell':'Large cell body with prominent nucleus, nucleolus, and Nissl substance.','Nerve cell (lipofuscin)':'Nerve cell with golden-brown lipofuscin pigment granules - sign of aging.','Nerve trunk':'Bundle of nerve fascicles surrounded by epineurium, each wrapped by perineurium.','Nerve trunk (osmic acid)':'Osmic acid stains myelin black - dark rings in cross-section.','LM spinal ganglion':'Contains pseudounipolar neurons with satellite cells in dorsal root.','LM sympathetic ganglion':'Contains multipolar neurons scattered among nerve fibers.','Medium sized artery & vein':'Artery has thick muscular wall; vein has thinner wall and larger lumen.','Continuous capillary':'Continuous endothelium with no pores, complete basement membrane.','Fenestrated capillary':'Endothelium with fenestrations (pores), found in kidney and intestine.'};return ex[label]||'This is identified as "'+label+'" based on its histological features.'}
-function showResults(){if(timerInterval)clearInterval(timerInterval);showScreen('results');const total=questions.length;const pct=Math.round((correctCount/total)*100);document.getElementById('finalScore').textContent=pct+'%';document.getElementById('rTotal').textContent=total;document.getElementById('rCorrect').textContent=correctCount;document.getElementById('rWrong').textContent=wrongCount;const msg=document.getElementById('passFailMsg');if(pct>=80){msg.textContent='🏆 Excellent!';msg.style.color='var(--success)'}else if(pct>=60){msg.textContent='👍 Good job!';msg.style.color='var(--primary)'}else if(pct>=40){msg.textContent='📚 Keep studying!';msg.style.color='#f59e0b'}else{msg.textContent='💪 Try again!';msg.style.color='var(--danger)'}const reviewDiv=document.getElementById('reviewList');reviewDiv.innerHTML='';answers.forEach((a,i)=>{const div=document.createElement('div');div.className='review-item '+(a.correct?'r-correct':'r-wrong');div.innerHTML='<div class="r-label"><strong>Q'+(i+1)+':</strong> '+(a.correct?'✅':'❌')+' '+a.label+'</div><img src="'+a.imgSrc+'" alt="'+a.label+'"><div class="r-label">Your answer: <strong>'+a.selected+'</strong></div><div class="r-label">Correct: <strong style="color:var(--success)">'+a.label+'</strong></div><div class="r-label" style="color:var(--muted);font-size:.8rem">'+getExplanation(a.label)+'</div>';reviewDiv.appendChild(div)})}
-function shareResults(){const total=questions.length;const pct=Math.round((correctCount/total)*100);const text='🔬 HistoQuiz Result:\\n✅ '+correctCount+
+function showResults(){if(timerInterval)clearInterval(timerInterval);document.getElementById('quizScreen').classList.add('hidden');document.getElementById('resultsScreen').classList.remove('hidden');const total=questions.length;const pct=Math.round((correctCount/total)*100);document.getElementById('finalScore').textContent=pct+'%';document.getElementById('rTotal').textContent=total;document.getElementById('rCorrect').textContent=correctCount;document.getElementById('rWrong').textContent=wrongCount;const msg=document.getElementById('passFailMsg');if(pct>=80){msg.textContent='🏆 Excellent!';msg.style.color='var(--success)'}else if(pct>=60){msg.textContent='👍 Good job!';msg.style.color='var(--primary)'}else if(pct>=40){msg.textContent='📚 Keep studying!';msg.style.color='#f59e0b'}else{msg.textContent='💪 Try again!';msg.style.color='var(--danger)'}const reviewDiv=document.getElementById('reviewList');reviewDiv.innerHTML='';answers.forEach((a,i)=>{const div=document.createElement('div');div.className='review-item '+(a.correct?'r-correct':'r-wrong');div.innerHTML='<div class="r-label"><strong>Q'+(i+1)+':</strong> '+(a.correct?'✅':'❌')+' '+a.label+'</div><img src="'+a.imgSrc+'" alt="'+a.label+'"><div class="r-label">Your answer: <strong>'+a.selected+'</strong></div><div class="r-label">Correct: <strong style="color:var(--success)">'+a.label+'</strong></div><div class="r-label" style="color:var(--muted);font-size:.8rem">'+a.explanation+'</div>';reviewDiv.appendChild(div)})}
+function shareResults(){const total=questions.length;const pct=Math.round((correctCount/total)*100);const text='🔬 HistoQuiz Result:\n✅ '+correctCount+'/'+total+' correct ('+pct+'%)\n\nTry it: https://kemokeko511-ai.github.io/Hisoquiz';if(navigator.share){navigator.share({title:'HistoQuiz',text:text})}else{navigator.clipboard.writeText(text).then(()=>alert('Copied!'))}}
+function restartQuiz(){document.getElementById('resultsScreen').classList.add('hidden');document.getElementById('welcomeScreen').classList.remove('hidden')}
+</script>
+</body>
+</html>
