@@ -5,144 +5,192 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HistoQuiz Pro</title>
 <style>
-:root{--bg:#f0f4f8;--card:#fff;--text:#1e293b;--sub:#64748b;--pri:#2563eb;--pri2:#7c3aed;--ok:#16a34a;--no:#dc2626;--brd:#e2e8f0;--sh:0 4px 20px rgba(0,0,0,.06)}
-.dark{--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--sub:#94a3b8;--brd:#334155;--sh:0 4px 20px rgba(0,0,0,.3)}
+:root{--bg:#0a0e1a;--card:rgba(15,23,42,.85);--card2:rgba(30,41,59,.6);--text:#f1f5f9;--sub:#94a3b8;--pri:#6366f1;--pri2:#a855f7;--ok:#22c55e;--no:#ef4444;--brd:rgba(99,102,241,.15);--glow:rgba(99,102,241,.08)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:.3s}
-.box{max-width:680px;margin:0 auto;padding:12px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 
-.hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--card);border-radius:14px;box-shadow:var(--sh);border:1px solid var(--brd);margin-bottom:14px}
+/* === FLOATING PARTICLES === */
+.particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;border-radius:50%;opacity:.15;animation:drift linear infinite}
+.p1{width:300px;height:300px;background:radial-gradient(circle,rgba(99,102,241,.3),transparent 70%);top:10%;left:-5%;animation-duration:25s}
+.p2{width:200px;height:200px;background:radial-gradient(circle,rgba(168,85,247,.25),transparent 70%);top:60%;right:-3%;animation-duration:20s}
+.p3{width:250px;height:250px;background:radial-gradient(circle,rgba(34,197,94,.2),transparent 70%);bottom:5%;left:30%;animation-duration:30s}
+.p4{width:150px;height:150px;background:radial-gradient(circle,rgba(236,72,153,.2),transparent 70%);top:30%;right:20%;animation-duration:18s}
+.p5{width:180px;height:180px;background:radial-gradient(circle,rgba(56,189,248,.2),transparent 70%);top:50%;left:10%;animation-duration:22s}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}25%{transform:translate(30px,-40px) scale(1.1)}50%{transform:translate(-20px,30px) scale(.9)}75%{transform:translate(40px,20px) scale(1.05)}100%{transform:translate(0,0) scale(1)}}
+
+/* === FLOATING CELLS === */
+.cells{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.cell{position:absolute;border:2px solid rgba(99,102,241,.1);border-radius:50%;animation:floatCell linear infinite}
+.c1{width:60px;height:60px;top:15%;left:5%;animation-duration:15s;border-color:rgba(168,85,247,.12)}
+.c2{width:40px;height:40px;top:70%;right:8%;animation-duration:12s;border-color:rgba(34,197,94,.1)}
+.c3{width:80px;height:80px;top:40%;left:80%;animation-duration:20s;border-color:rgba(99,102,241,.08)}
+.c4{width:30px;height:30px;top:85%;left:25%;animation-duration:10s;border-color:rgba(236,72,153,.12)}
+.c5{width:50px;height:50px;top:5%;right:30%;animation-duration:17s;border-color:rgba(56,189,248,.1)}
+.c6{width:45px;height:45px;top:55%;left:45%;animation-duration:14s;border-color:rgba(168,85,247,.1)}
+@keyframes floatCell{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(20px,-30px) rotate(90deg)}50%{transform:translate(-15px,25px) rotate(180deg)}75%{transform:translate(25px,15px) rotate(270deg)}100%{transform:translate(0,0) rotate(360deg)}}
+
+.box{max-width:680px;margin:0 auto;padding:12px;position:relative;z-index:1}
+
+/* === HEADER === */
+.hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:16px;border:1px solid var(--brd);margin-bottom:14px}
 .logo{display:flex;align-items:center;gap:8px}
-.logo-i{width:34px;height:34px;background:linear-gradient(135deg,var(--pri),var(--pri2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
-.logo span{font-size:1.1rem;font-weight:800;background:linear-gradient(135deg,var(--pri),var(--pri2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-i{width:36px;height:36px;background:linear-gradient(135deg,var(--pri),var(--pri2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;box-shadow:0 0 20px rgba(99,102,241,.3)}
+.logo span{font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hdr-btns{display:flex;gap:5px}
-.hb{width:36px;height:36px;border-radius:10px;border:1px solid var(--brd);background:var(--card);color:var(--text);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:.2s}
-.hb:hover{border-color:var(--pri)}
-.hb.on{background:var(--pri);border-color:var(--pri);color:#fff}
+.hb{width:38px;height:38px;border-radius:10px;border:1px solid var(--brd);background:var(--card2);color:var(--text);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:.3s;backdrop-filter:blur(10px)}
+.hb:hover{border-color:var(--pri);box-shadow:0 0 15px var(--glow)}
+.hb.on{background:var(--pri);border-color:var(--pri);color:#fff;box-shadow:0 0 20px rgba(99,102,241,.4)}
 
-.home-card{background:var(--card);border-radius:20px;padding:36px 20px;box-shadow:var(--sh);border:1px solid var(--brd);text-align:center;position:relative;overflow:hidden}
-.home-card::before{content:'';position:absolute;top:-60%;left:-60%;width:220%;height:220%;background:radial-gradient(circle,rgba(37,99,235,.04) 0%,transparent 70%);pointer-events:none}
-.home-icon{font-size:4rem;margin-bottom:16px;display:inline-block;animation:float 3s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.home-card h2{font-size:1.5rem;font-weight:800;margin-bottom:6px}
-.home-card .sub{color:var(--pri);font-weight:600;font-size:.9rem;margin-bottom:14px}
-.feats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;text-align:left}
-.feat{display:flex;align-items:center;gap:7px;padding:9px 10px;background:rgba(37,99,235,.04);border-radius:10px;font-size:.78rem;font-weight:500}
-.sbtn{padding:15px 44px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;font-size:1.05rem;font-weight:700;cursor:pointer;transition:.3s;box-shadow:0 4px 15px rgba(37,99,235,.25);position:relative;z-index:1}
-.sbtn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,99,235,.35)}
+/* === HOME === */
+.home{background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:24px;padding:40px 24px;border:1px solid var(--brd);text-align:center;position:relative;overflow:hidden}
+.home::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(99,102,241,.12),transparent 70%);pointer-events:none}
+.home-icon{font-size:4.5rem;margin-bottom:20px;display:inline-block;animation:pulse 3s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(99,102,241,.3))}
+@keyframes pulse{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.05) translateY(-8px)}}
+.home h2{font-size:1.6rem;font-weight:800;margin-bottom:6px;background:linear-gradient(135deg,#e2e8f0,#f8fafc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.home .sub{background:linear-gradient(135deg,var(--pri),var(--pri2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;font-size:.95rem;margin-bottom:16px}
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px;text-align:left}
+.feat{display:flex;align-items:center;gap:7px;padding:10px 12px;background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.1);border-radius:12px;font-size:.78rem;font-weight:500;transition:.3s}
+.feat:hover{background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.2)}
+.sbtn{padding:16px 50px;border:none;border-radius:16px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;font-size:1.1rem;font-weight:700;cursor:pointer;transition:.3s;box-shadow:0 4px 20px rgba(99,102,241,.35);position:relative;overflow:hidden}
+.sbtn::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.1),transparent 70%);opacity:0;transition:.3s}
+.sbtn:hover::before{opacity:1}
+.sbtn:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(99,102,241,.45)}
 .sbtn:active{transform:translateY(0)}
 
+/* === QUIZ === */
 .pi{display:flex;justify-content:space-between;font-size:.78rem;color:var(--sub);margin-bottom:5px;font-weight:500}
-.pb{height:5px;background:var(--brd);border-radius:3px;overflow:hidden;margin-bottom:10px}
-.pf{height:100%;background:linear-gradient(90deg,var(--pri),var(--pri2));border-radius:3px;transition:width .5s}
+.pb{height:5px;background:rgba(99,102,241,.1);border-radius:3px;overflow:hidden;margin-bottom:10px}
+.pf{height:100%;background:linear-gradient(90deg,var(--pri),var(--pri2));border-radius:3px;transition:width .5s;box-shadow:0 0 10px rgba(99,102,241,.3)}
 .sr{display:flex;gap:6px;margin-bottom:10px}
-.sc{flex:1;background:var(--card);border:1px solid var(--brd);border-radius:11px;padding:10px 6px;text-align:center;box-shadow:var(--sh)}
+.sc{flex:1;background:var(--card);backdrop-filter:blur(10px);border:1px solid var(--brd);border-radius:12px;padding:10px 6px;text-align:center}
 .sc .n{font-size:1.3rem;font-weight:800}
 .sc .l{font-size:.6rem;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-top:1px}
+.blu{color:#818cf8}.grn{color:var(--ok)}.rd{color:var(--no)}
 
-.qc{background:var(--card);border-radius:18px;padding:18px;box-shadow:var(--sh);border:1px solid var(--brd);margin-bottom:14px}
+.qc{background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:20px;padding:18px;border:1px solid var(--brd);margin-bottom:14px}
 .qc.anim{animation:su .4s ease}
 @keyframes su{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.badge{display:inline-block;padding:3px 10px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border-radius:16px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.badge{display:inline-block;padding:4px 12px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border-radius:20px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;box-shadow:0 0 12px rgba(99,102,241,.2)}
 .qt{font-size:1.05rem;font-weight:700;margin-bottom:14px}
 
-.ib{position:relative;width:100%;border-radius:14px;overflow:hidden;margin-bottom:14px;background:linear-gradient(135deg,#f1f5f9,#e2e8f0);box-shadow:inset 0 2px 8px rgba(0,0,0,.04)}
-.dark .ib{background:linear-gradient(135deg,#1e293b,#0f172a)}
-.ib img{width:100%;min-height:220px;max-height:480px;object-fit:contain;display:block;padding:6px}
-.bl{position:absolute;top:0;left:0;right:0;height:16%;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(0,0,0,.08);z-index:2;pointer-events:none;transition:.6s}
-.bl.off{backdrop-filter:none;-webkit-backdrop-filter:none;background:transparent}
-.bl2{position:absolute;top:38%;left:5%;width:90%;height:16%;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(0,0,0,.04);z-index:2;pointer-events:none;border-radius:10px;transition:.6s}
-.bl2.off{backdrop-filter:none;-webkit-backdrop-filter:none;background:transparent}
-.bl3{position:absolute;bottom:0;left:0;right:0;height:16%;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(0,0,0,.08);z-index:2;pointer-events:none;transition:.6s}
-.bl3.off{backdrop-filter:none;-webkit-backdrop-filter:none;background:transparent}
-.ibadge{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;padding:3px 9px;border-radius:7px;font-size:.68rem;z-index:3;font-weight:600;transition:.3s}
+/* === IMAGE - BLUR ONLY ON TEXT STRIP === */
+.ib{position:relative;width:100%;border-radius:16px;overflow:hidden;margin-bottom:14px;background:#0a0e1a;border:1px solid var(--brd)}
+.ib img{width:100%;min-height:220px;max-height:500px;object-fit:contain;display:block;padding:4px}
+.text-blur{position:absolute;top:0;left:0;right:0;height:10%;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);background:rgba(10,14,26,.3);z-index:2;pointer-events:none;transition:all .6s ease}
+.text-blur.off{backdrop-filter:none;-webkit-backdrop-filter:none;background:transparent}
+.ibadge{position:absolute;bottom:6px;right:6px;background:rgba(10,14,26,.7);color:#fff;padding:4px 10px;border-radius:8px;font-size:.68rem;z-index:3;font-weight:600;transition:.3s;backdrop-filter:blur(8px);border:1px solid rgba(99,102,241,.15)}
 
+/* === OPTIONS === */
 .opts{display:grid;gap:7px}
-.ob{padding:13px 14px;border:2px solid var(--brd);border-radius:13px;background:var(--card);color:var(--text);font-size:.85rem;cursor:pointer;text-align:left;transition:.25s;display:flex;align-items:center;gap:10px;font-weight:500;position:relative;overflow:hidden}
-.ob::before{content:'';position:absolute;top:0;left:0;width:0;height:100%;background:rgba(37,99,235,.04);transition:width .3s}
+.ob{padding:13px 14px;border:2px solid var(--brd);border-radius:14px;background:var(--card2);backdrop-filter:blur(10px);color:var(--text);font-size:.85rem;cursor:pointer;text-align:left;transition:.25s;display:flex;align-items:center;gap:10px;font-weight:500;position:relative;overflow:hidden}
+.ob::before{content:'';position:absolute;top:0;left:0;width:0;height:100%;background:linear-gradient(90deg,rgba(99,102,241,.08),transparent);transition:width .3s}
 .ob:hover:not(:disabled)::before{width:100%}
-.ob:hover:not(:disabled){border-color:var(--pri);transform:translateX(5px)}
+.ob:hover:not(:disabled){border-color:var(--pri);transform:translateX(5px);box-shadow:0 0 15px var(--glow)}
 .ob:disabled{cursor:default}
-.ob.ok{border-color:var(--ok);background:rgba(22,163,74,.08);animation:pop .4s}
-.ob.no{border-color:var(--no);background:rgba(220,38,38,.08);animation:shake .4s}
+.ob.ok{border-color:var(--ok);background:rgba(34,197,94,.1);animation:pop .4s;box-shadow:0 0 20px rgba(34,197,94,.15)}
+.ob.no{border-color:var(--no);background:rgba(239,68,68,.1);animation:shake .4s;box-shadow:0 0 20px rgba(239,68,68,.15)}
 @keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.015)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.ol{width:30px;height:30px;border-radius:9px;background:var(--brd);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0;transition:.3s}
-.ok .ol{background:var(--ok);color:#fff;transform:scale(1.1)}
-.no .ol{background:var(--no);color:#fff}
+.ol{width:30px;height:30px;border-radius:9px;background:rgba(99,102,241,.15);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0;transition:.3s;border:1px solid rgba(99,102,241,.1)}
+.ok .ol{background:var(--ok);color:#fff;transform:scale(1.1);border-color:var(--ok)}
+.no .ol{background:var(--no);color:#fff;border-color:var(--no)}
 
-.fb{margin-top:14px;padding:14px;border-radius:13px;border:1px solid var(--brd);animation:fi .3s}
-.fb.fok{background:rgba(22,163,74,.06);border-color:var(--ok)}
-.fb.fno{background:rgba(220,38,38,.06);border-color:var(--no)}
+/* === FEEDBACK === */
+.fb{margin-top:14px;padding:14px;border-radius:14px;border:1px solid var(--brd);animation:fi .3s;backdrop-filter:blur(10px)}
+.fb.fok{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3)}
+.fb.fno{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.3)}
 .fb h4{margin-bottom:4px;font-size:1rem}
 .fb p{font-size:.78rem;color:var(--sub);line-height:1.55}
 .fb .al{color:var(--text);font-weight:700;font-size:.85rem}
 @keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-.nbtn{width:100%;padding:14px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:12px;transition:.3s;box-shadow:0 4px 12px rgba(37,99,235,.2)}
-.nbtn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.3)}
+.nbtn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:12px;transition:.3s;box-shadow:0 4px 15px rgba(99,102,241,.25)}
+.nbtn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(99,102,241,.35)}
 
-.rc{background:var(--card);border-radius:20px;padding:28px 20px;box-shadow:var(--sh);border:1px solid var(--brd);text-align:center;margin-bottom:14px;position:relative;overflow:hidden}
-.rc::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(37,99,235,.04) 0%,transparent 70%);pointer-events:none}
+/* === RESULTS === */
+.rc{background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:24px;padding:32px 20px;border:1px solid var(--brd);text-align:center;margin-bottom:14px;position:relative;overflow:hidden}
+.rc::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:250px;height:250px;background:radial-gradient(circle,rgba(99,102,241,.1),transparent 70%);pointer-events:none}
 .rc h2{font-size:1.4rem;margin-bottom:16px;font-weight:800}
-.bs{font-size:3.5rem;font-weight:900;background:linear-gradient(135deg,var(--pri),var(--pri2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.bs{font-size:3.5rem;font-weight:900;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;filter:drop-shadow(0 0 20px rgba(99,102,241,.3))}
 .rg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:20px 0}
-.rs{padding:14px;border-radius:13px;border:1px solid var(--brd);background:rgba(37,99,235,.02)}
+.rs{padding:14px;border-radius:14px;border:1px solid var(--brd);background:rgba(99,102,241,.04)}
 .rs .rn{font-size:1.4rem;font-weight:800}
 .rs .rl{font-size:.65rem;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
-.grn{color:var(--ok)}.rd{color:var(--no)}
 
 .bg{display:grid;gap:7px;margin-bottom:14px}
-.wab{padding:13px;border:none;border-radius:13px;background:#25d366;color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s}
-.wab:hover{background:#128c7e;transform:translateY(-1px)}
-.shb{padding:13px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s}
+.wab{padding:13px;border:none;border-radius:13px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s;box-shadow:0 4px 15px rgba(34,197,94,.2)}
+.wab:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(34,197,94,.3)}
+.shb{padding:13px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s;box-shadow:0 4px 15px rgba(99,102,241,.2)}
 .shb:hover{transform:translateY(-1px)}
-.reb{padding:13px;border:2px solid var(--pri);border-radius:13px;background:transparent;color:var(--pri);font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s}
+.reb{padding:13px;border:2px solid var(--pri);border-radius:13px;background:transparent;color:#818cf8;font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s}
 .reb:hover{background:var(--pri);color:#fff}
 
 .rvs h3{font-size:1rem;margin-bottom:10px;font-weight:700}
-.ri{background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:var(--sh)}
+.ri{background:var(--card);backdrop-filter:blur(10px);border:1px solid var(--brd);border-radius:16px;padding:14px;margin-bottom:10px}
 .ri.rok{border-left:4px solid var(--ok)}
 .ri.rno{border-left:4px solid var(--no)}
-.ri img{width:100%;max-height:200px;object-fit:contain;border-radius:9px;margin:6px 0}
+.ri img{width:100%;max-height:200px;object-fit:contain;border-radius:10px;margin:6px 0}
 .ri p{font-size:.78rem;color:var(--sub);margin:3px 0;line-height:1.5}
 
 .hide{display:none!important}
 .conf{position:fixed;top:-10px;z-index:999;pointer-events:none;animation:cf 3s linear forwards}
 @keyframes cf{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
-.timer{font-family:monospace;font-size:.82rem;color:var(--sub);font-weight:600}
+.timer{font-family:'SF Mono',monospace;font-size:.82rem;color:var(--sub);font-weight:600;background:rgba(99,102,241,.08);padding:2px 8px;border-radius:6px}
 </style>
 </head>
 <body>
+
+<!-- Floating Particles Background -->
+<div class="particles">
+<div class="particle p1"></div>
+<div class="particle p2"></div>
+<div class="particle p3"></div>
+<div class="particle p4"></div>
+<div class="particle p5"></div>
+</div>
+
+<!-- Floating Cell Shapes -->
+<div class="cells">
+<div class="cell c1"></div>
+<div class="cell c2"></div>
+<div class="cell c3"></div>
+<div class="cell c4"></div>
+<div class="cell c5"></div>
+<div class="cell c6"></div>
+</div>
+
 <div class="box">
 <div class="hdr">
-<div class="logo"><div class="logo-i">🔬</div><span>HistoQuiz</span></div>
+<div class="logo"><div class="logo-i">🔬</div><span>HistoQuiz Pro</span></div>
 <div class="hdr-btns">
-<button class="hb" onclick="tt()" id="tb">⏱</button>
-<button class="hb" onclick="td()" id="db">🌙</button>
+<button class="hb" onclick="tt()" id="tb" title="Timer">⏱</button>
+<button class="hb" onclick="td()" id="db" title="Theme">🎨</button>
 </div>
 </div>
+
 <div id="H">
-<div class="home-card">
-<div class="home-icon">🔬</div>
+<div class="home">
+<div class="home-icon">🧬</div>
 <h2>Histology Practical Quiz</h2>
 <div class="sub">Blood Film Identification</div>
 <div class="feats">
-<div class="feat">📸 5 Questions</div>
+<div class="feat">🔬 5 Slides</div>
 <div class="feat">🎯 MCQ Format</div>
 <div class="feat">⚡ Instant Feedback</div>
 <div class="feat">📊 Score + Review</div>
-<div class="feat">🔍 Blur Labels</div>
+<div class="feat">🔍 Blurred Labels</div>
 <div class="feat">🏆 Share Results</div>
 </div>
-<button class="sbtn" onclick="go()">▶️ Start Quiz</button>
+<button class="sbtn" onclick="go()">🚀 Start Quiz</button>
 </div>
 </div>
+
 <div id="G" class="hide">
 <div class="pi"><span>Question <span id="qn">1</span> of 5</span><span class="timer" id="tm"></span></div>
 <div class="pb"><div class="pf" id="pf"></div></div>
 <div class="sr">
-<div class="sc"><div class="n" style="color:var(--pri)" id="s1">0</div><div class="l">Score</div></div>
+<div class="sc"><div class="n blu" id="s1">0</div><div class="l">Score</div></div>
 <div class="sc"><div class="n grn" id="s2">0</div><div class="l">Correct</div></div>
 <div class="sc"><div class="n rd" id="s3">0</div><div class="l">Wrong</div></div>
 </div>
@@ -151,16 +199,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="qt">What is this tissue / cell?</div>
 <div class="ib">
 <img id="qi" src="">
-<div class="bl" id="b1"></div>
-<div class="bl2" id="b2"></div>
-<div class="bl3" id="b3"></div>
-<div class="ibadge" id="ib">🔍 Identify</div>
+<div class="text-blur" id="tb1"></div>
+<div class="ibadge" id="ibg">🔍 Identify this</div>
 </div>
 <div class="opts" id="op"></div>
 <div id="fb" class="hide"></div>
 <button class="nbtn hide" id="nb" onclick="nx()">Next Question →</button>
 </div>
 </div>
+
 <div id="R" class="hide">
 <div class="rc">
 <h2>🎉 Quiz Complete!</h2>
@@ -170,11 +217,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="rs"><div class="rn grn" id="r2">0</div><div class="rl">Correct</div></div>
 <div class="rs"><div class="rn rd" id="r3">0</div><div class="rl">Wrong</div></div>
 </div>
-<div id="ms" style="font-size:1.2rem;font-weight:800;margin-top:8px"></div>
+<div id="ms" style="font-size:1.2rem;font-weight:800;margin-top:10px"></div>
 </div>
 <div class="bg">
 <button class="wab" onclick="sw()">📱 Share on WhatsApp</button>
-<button class="shb" onclick="ss()">📤 Copy Results</button>
+<button class="shb" onclick="ss()">📤 Share Results</button>
 <button class="reb" onclick="re()">🔄 Try Again</button>
 </div>
 <div class="rvs">
@@ -183,21 +230,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 </div>
 </div>
+
 <script>
 var U='https://raw.githubusercontent.com/kemokeko511-ai/Hisoquiz/main/';
 var DA=[
-{i:'Img1.jpg',l:'Blood film small lymphocyte',e:'Small round cell with dense dark nucleus occupying most of the cell. Very thin rim of basophilic cytoplasm. Smallest WBC with highest N:C ratio.'},
-{i:'Img2.jpg',l:'Blood film large lymphocyte',e:'Larger cell with more abundant pale blue cytoplasm. Round nucleus with less condensed (euchromatic) chromatin. May contain azurophilic granules.'},
-{i:'Img3.jpg',l:'Blood film small & large lymphocytes',e:'Side-by-side comparison showing size difference. Small has minimal cytoplasm + dense nucleus. Large has more cytoplasm + open chromatin.'},
-{i:'Img4.jpg',l:'Blood film monocyte',e:'Largest WBC in blood. Kidney/horseshoe-shaped nucleus with lacy chromatin. Abundant pale blue-grey cytoplasm. Precursor of tissue macrophages.'},
-{i:'Img5.jpg',l:'Blood film leucocytes',e:'Overview of mixed WBCs among RBCs. Neutrophils (multilobed), eosinophils (bilobed + red granules), lymphocytes (round dark nucleus), monocytes (kidney nucleus).'}
+{i:'Img1.jpg',l:'Blood film small lymphocyte',e:'Small round cell with dense dark nucleus occupying most of the cell. Very thin rim of basophilic cytoplasm. Smallest WBC with highest nucleus-to-cytoplasm ratio.'},
+{i:'Img2.jpg',l:'Blood film large lymphocyte',e:'Larger cell with more abundant pale blue cytoplasm. Round nucleus with less condensed (euchromatic) chromatin. May contain azurophilic granules (NK cells).'},
+{i:'Img3.jpg',l:'Blood film small & large lymphocytes',e:'Side-by-side comparison. Small lymphocyte: minimal cytoplasm + dense dark nucleus. Large lymphocyte: more cytoplasm + open chromatin pattern.'},
+{i:'Img4.jpg',l:'Blood film monocyte',e:'Largest WBC in peripheral blood. Kidney/horseshoe-shaped nucleus with lacy chromatin. Abundant pale blue-grey cytoplasm with fine azurophilic granules. Precursor of macrophages.'},
+{i:'Img5.jpg',l:'Blood film leucocytes',e:'Overview of mixed WBCs among RBCs and platelets. Neutrophils (multilobed nucleus), eosinophils (bilobed + red granules), lymphocytes (round dark), monocytes (kidney-shaped).'}
 ];
 var Q=[],C=0,S=0,CC=0,WC=0,A=[],AN=false;
 var TO=false,TS=0,TI=null;
-function td(){document.documentElement.classList.toggle('dark');document.getElementById('db').textContent=document.documentElement.classList.contains('dark')?'☀️':'🌙'}
+var themes=[
+{bg:'#0a0e1a',card:'rgba(15,23,42,.85)',pri:'#6366f1',pri2:'#a855f7'},
+{bg:'#0f1a0f',card:'rgba(15,42,23,.85)',pri:'#22c55e',pri2:'#10b981'},
+{bg:'#1a0a1a',card:'rgba(42,15,42,.85)',pri:'#d946ef',pri2:'#a855f7'},
+{bg:'#0a1a1a',card:'rgba(15,42,42,.85)',pri:'#06b6d4',pri2:'#0ea5e9'}
+];
+var TH=0;
+function td(){TH=(TH+1)%themes.length;var t=themes[TH];document.documentElement.style.setProperty('--bg',t.bg);document.documentElement.style.setProperty('--card',t.card);document.documentElement.style.setProperty('--pri',t.pri);document.documentElement.style.setProperty('--pri2',t.pri2)}
 function tt(){TO=!TO;var b=document.getElementById('tb');b.classList.toggle('on',TO);if(TO){TS=0;TI=setInterval(function(){TS++;var m=Math.floor(TS/60);var s=TS%60;document.getElementById('tm').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s},1000)}else{clearInterval(TI);document.getElementById('tm').textContent=''}}
 function sh(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
-function cf(){var co=['#2563eb','#7c3aed','#16a34a','#f59e0b','#ec4899','#06b6d4','#f97316'];for(var i=0;i<25;i++){var c=document.createElement('div');c.className='conf';c.style.left=Math.random()*100+'vw';var sz=Math.random()*8+4;c.style.width=sz+'px';c.style.height=sz+'px';c.style.background=co[Math.floor(Math.random()*co.length)];c.style.borderRadius=Math.random()>.5?'50%':'2px';c.style.animationDuration=(Math.random()*2+2)+'s';c.style.animationDelay=(Math.random()*.5)+'s';document.body.appendChild(c);setTimeout(function(){c.remove()},4500)}}
+function cf(){var co=['#6366f1','#a855f7','#22c55e','#f59e0b','#ec4899','#06b6d4','#f97316','#818cf8'];for(var i=0;i<30;i++){var c=document.createElement('div');c.className='conf';c.style.left=Math.random()*100+'vw';var sz=Math.random()*10+4;c.style.width=sz+'px';c.style.height=sz+'px';c.style.background=co[Math.floor(Math.random()*co.length)];c.style.borderRadius=Math.random()>.5?'50%':'3px';c.style.animationDuration=(Math.random()*2+2)+'s';c.style.animationDelay=(Math.random()*.5)+'s';document.body.appendChild(c);setTimeout(function(){c.remove()},4500)}}
 function go(){
 var al=DA.map(function(x){return x.l});Q=[];var sd=DA.slice();sh(sd);
 for(var k=0;k<sd.length;k++){var it=sd[k];var co=it.l;var wr=al.filter(function(x){return x!==co});sh(wr);wr=wr.slice(0,3);var op=wr.concat([co]);sh(op);Q.push({src:U+it.i,l:co,e:it.e,o:op,ci:op.indexOf(co)})}
@@ -211,30 +266,21 @@ document.getElementById('s1').textContent=S;
 document.getElementById('s2').textContent=CC;
 document.getElementById('s3').textContent=WC;
 document.getElementById('qi').src=q.src;
-document.getElementById('b1').classList.remove('off');
-document.getElementById('b2').classList.remove('off');
-document.getElementById('b3').classList.remove('off');
-document.getElementById('ib').textContent='🔍 Identify';
-document.getElementById('ib').style.background='rgba(0,0,0,.6)';
+document.getElementById('tb1').classList.remove('off');
+document.getElementById('ibg').textContent='🔍 Identify this';
+document.getElementById('ibg').style.background='rgba(10,14,26,.7)';
 var qc=document.getElementById('QC');qc.classList.remove('anim');void qc.offsetHeight;qc.classList.add('anim');
 var od=document.getElementById('op');od.innerHTML='';
 var lt=['A','B','C','D'];
-for(var i=0;i<q.o.length;i++){
-var b=document.createElement('button');b.className='ob';
-b.innerHTML='<span class="ol">'+lt[i]+'</span><span>'+q.o[i]+'</span>';
-b.setAttribute('data-i',i);
-b.onclick=function(){pk(parseInt(this.getAttribute('data-i')))};
-od.appendChild(b)}
+for(var i=0;i<q.o.length;i++){var b=document.createElement('button');b.className='ob';b.innerHTML='<span class="ol">'+lt[i]+'</span><span>'+q.o[i]+'</span>';b.setAttribute('data-i',i);b.onclick=function(){pk(parseInt(this.getAttribute('data-i')))};od.appendChild(b)}
 document.getElementById('fb').className='hide';
 document.getElementById('nb').className='nbtn hide'}
 function pk(idx){
 if(AN)return;AN=true;var q=Q[C];var ok=idx===q.ci;
-if(ok){S++;CC++;cf()}else{WC++;if(navigator.vibrate)navigator.vibrate(200)}
-document.getElementById('b1').classList.add('off');
-document.getElementById('b2').classList.add('off');
-document.getElementById('b3').classList.add('off');
-document.getElementById('ib').textContent='✅ '+q.l;
-document.getElementById('ib').style.background='rgba(22,163,74,.85)';
+if(ok){S++;CC++;cf()}else{WC++;if(navigator.vibrate)navigator.vibrate([100,50,100])}
+document.getElementById('tb1').classList.add('off');
+document.getElementById('ibg').textContent='✅ '+q.l;
+document.getElementById('ibg').style.background='rgba(34,197,94,.85)';
 document.getElementById('s1').textContent=S;
 document.getElementById('s2').textContent=CC;
 document.getElementById('s3').textContent=WC;
@@ -242,22 +288,21 @@ var bs=document.querySelectorAll('.ob');
 for(var i=0;i<bs.length;i++){bs[i].disabled=true;if(i===q.ci)bs[i].classList.add('ok');if(i===idx&&!ok)bs[i].classList.add('no')}
 var f=document.getElementById('fb');
 f.className='fb '+(ok?'fok':'fno');
-f.innerHTML='<h4>'+(ok?'✅ Correct! Well done!':'❌ Incorrect')+'</h4><p class="al">'+q.l+'</p><p>'+q.e+'</p>';
+f.innerHTML='<h4>'+(ok?'✅ Correct! Excellent!':'❌ Incorrect')+'</h4><p class="al">'+q.l+'</p><p>'+q.e+'</p>';
 A.push({l:q.l,s:q.o[idx],ok:ok,src:q.src,e:q.e});
 var nb=document.getElementById('nb');nb.className='nbtn';
 nb.textContent=C+1>=Q.length?'📊 View Results':'Next Question →'}
 function nx(){C++;if(C>=Q.length){rs()}else{ld()}}
 function rs(){
 if(TI)clearInterval(TI);
-document.getElementById('G').className='hide';
-document.getElementById('R').className='';
+document.getElementById('G').className='hide';document.getElementById('R').className='';
 var t=Q.length;var p=Math.round(CC/t*100);
 document.getElementById('fs').textContent=p+'%';
 document.getElementById('r1').textContent=t;
 document.getElementById('r2').textContent=CC;
 document.getElementById('r3').textContent=WC;
 var m=document.getElementById('ms');
-if(p>=80){m.textContent='🏆 Excellent!';m.style.color='var(--ok)';cf()}
+if(p>=80){m.textContent='🏆 Excellent!';m.style.color='var(--ok)';cf();cf()}
 else if(p>=60){m.textContent='👍 Good job!';m.style.color='var(--pri)'}
 else if(p>=40){m.textContent='📚 Keep studying!';m.style.color='#f59e0b'}
 else{m.textContent='💪 Try again!';m.style.color='var(--no)'}
@@ -266,8 +311,8 @@ for(var i=0;i<A.length;i++){var a=A[i];var d=document.createElement('div');
 d.className='ri '+(a.ok?'rok':'rno');
 d.innerHTML='<p><strong>Q'+(i+1)+':</strong> '+(a.ok?'✅':'❌')+' '+a.l+'</p><img src="'+a.src+'"><p>Your answer: <strong>'+a.s+'</strong></p><p>Correct: <strong style="color:var(--ok)">'+a.l+'</strong></p><p style="margin-top:4px">'+a.e+'</p>';
 rv.appendChild(d)}}
-function sw(){var t=Q.length;var p=Math.round(CC/t*100);var tx='🔬 *HistoQuiz Pro Result*%0A✅ '+CC+'/'+t+' correct ('+p+'%)%0A%0A🧪 Try it yourself:%0Ahttps://kemokeko511-ai.github.io/Hisoquiz';window.open('https://wa.me/?text='+tx)}
-function ss(){var t=Q.length;var p=Math.round(CC/t*100);var tx='🔬 HistoQuiz: '+CC+'/'+t+' ('+p+'%)\nTry: https://kemokeko511-ai.github.io/Hisoquiz';if(navigator.share){navigator.share({title:'HistoQuiz',text:tx})}else if(navigator.clipboard){navigator.clipboard.writeText(tx).then(function(){alert('✅ Copied!')})}}
+function sw(){var t=Q.length;var p=Math.round(CC/t*100);var tx='🔬 *HistoQuiz Pro Result*%0A✅ '+CC+'/'+t+' correct ('+p+'%)%0A%0A🧪 Try it:%0Ahttps://kemokeko511-ai.github.io/Hisoquiz';window.open('https://wa.me/?text='+tx)}
+function ss(){var t=Q.length;var p=Math.round(CC/t*100);var tx='🔬 HistoQuiz: '+CC+'/'+t+' ('+p+'%)\nTry: https://kemokeko511-ai.github.io/Hisoquiz';if(navigator.share){navigator.share({title:'HistoQuiz Pro',text:tx})}else if(navigator.clipboard){navigator.clipboard.writeText(tx).then(function(){alert('✅ Copied!')})}}
 function re(){document.getElementById('R').className='hide';document.getElementById('H').className=''}
 </script>
 </body>
