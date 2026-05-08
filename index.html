@@ -10,8 +10,6 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:all .3s}
 .container{max-width:760px;margin:0 auto;padding:12px}
-
-/* Header */
 .header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;margin-bottom:16px;background:var(--card);border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--border)}
 .logo{display:flex;align-items:center;gap:8px}
 .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
@@ -20,8 +18,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .btn-sm{padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:.75rem;transition:all .2s;font-weight:600}
 .btn-sm:hover{border-color:var(--primary);background:rgba(37,99,235,.05)}
 .btn-sm.active{background:var(--primary);color:#fff;border-color:var(--primary)}
-
-/* Welcome */
 .welcome{background:var(--card);border-radius:20px;padding:40px 24px;box-shadow:var(--shadow);border:1px solid var(--border);text-align:center;position:relative;overflow:hidden}
 .welcome::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(37,99,235,.03) 0%,transparent 70%);animation:pulse 4s ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
@@ -36,8 +32,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .start-btn{padding:16px 48px;border:none;border-radius:14px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 4px 15px rgba(37,99,235,.3);position:relative;z-index:1}
 .start-btn:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(37,99,235,.4)}
 .start-btn:active{transform:translateY(0)}
-
-/* Quiz */
 .progress-section{margin-bottom:12px}
 .progress-info{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);margin-bottom:6px;font-weight:500}
 .progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
@@ -47,25 +41,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .stat-card .num{font-size:1.4rem;font-weight:800}
 .stat-card .lbl{font-size:.65rem;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
 .score-num{color:var(--primary)}.correct-num{color:var(--success)}.wrong-num{color:var(--danger)}
-
 .question-card{background:var(--card);border-radius:20px;padding:20px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:16px;animation:slideUp .4s ease}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .q-badge{display:inline-block;padding:4px 12px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-radius:20px;font-size:.7rem;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
 .q-title{font-size:1.1rem;font-weight:700;margin-bottom:16px}
-
-/* Image Container - BIGGER */
 .img-container{position:relative;width:100%;margin-bottom:16px;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#f8fafc,#e2e8f0);box-shadow:inset 0 2px 10px rgba(0,0,0,.05)}
 .dark .img-container{background:linear-gradient(135deg,#1e293b,#0f172a)}
 .img-container img{width:100%;min-height:250px;max-height:500px;object-fit:contain;display:block;padding:8px;transition:all .3s}
-
-/* BLUR OVERLAYS */
 .blur-top{position:absolute;top:0;left:0;right:0;height:16%;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);background:rgba(0,0,0,.08);z-index:2;pointer-events:none;transition:all .6s ease}
 .blur-mid{position:absolute;top:38%;left:5%;width:90%;height:18%;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);background:rgba(0,0,0,.05);z-index:2;pointer-events:none;border-radius:12px;transition:all .6s ease}
 .blur-bot{position:absolute;bottom:0;left:0;right:0;height:16%;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);background:rgba(0,0,0,.08);z-index:2;pointer-events:none;transition:all .6s ease}
 .blur-removed{backdrop-filter:blur(0)!important;-webkit-backdrop-filter:blur(0)!important;background:transparent!important}
 .img-badge{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;padding:4px 10px;border-radius:8px;font-size:.7rem;z-index:3;font-weight:600}
-
-/* Options */
 .options{display:grid;gap:8px}
 .opt-btn{padding:14px 16px;border:2px solid var(--border);border-radius:14px;background:var(--card);color:var(--text);font-size:.9rem;cursor:pointer;text-align:left;transition:all .25s;display:flex;align-items:center;gap:12px;font-weight:500;position:relative;overflow:hidden}
 .opt-btn::before{content:'';position:absolute;top:0;left:0;width:0;height:100%;background:rgba(37,99,235,.05);transition:width .3s}
@@ -79,8 +66,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .opt-letter{width:32px;height:32px;border-radius:10px;background:var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0;transition:all .3s}
 .correct .opt-letter{background:var(--success);color:#fff;transform:scale(1.1)}
 .wrong .opt-letter{background:var(--danger);color:#fff}
-
-/* Feedback */
 .feedback{margin-top:16px;padding:16px;border-radius:14px;border:1px solid var(--border);animation:fadeIn .4s}
 .feedback.correct-fb{background:rgba(22,163,74,.06);border-color:var(--success)}
 .feedback.wrong-fb{background:rgba(220,38,38,.06);border-color:var(--danger)}
@@ -88,11 +73,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .feedback p{font-size:.82rem;color:var(--muted);line-height:1.6}
 .feedback .answer-label{color:var(--text);font-weight:700;font-size:.9rem}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
 .next-btn{width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:1rem;font-weight:700;cursor:pointer;margin-top:14px;transition:all .3s;box-shadow:0 4px 15px rgba(37,99,235,.2)}
 .next-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,99,235,.3)}
-
-/* Results */
 .results-card{background:var(--card);border-radius:20px;padding:32px 24px;box-shadow:var(--shadow);border:1px solid var(--border);text-align:center;margin-bottom:16px;position:relative;overflow:hidden}
 .results-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(37,99,235,.04) 0%,transparent 70%)}
 .results-card h2{font-size:1.5rem;margin-bottom:20px;font-weight:800}
@@ -105,7 +87,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .btn-group{display:grid;gap:8px;margin-bottom:16px}
 .share-wa{padding:14px;border:none;border-radius:14px;background:#25d366;color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s}
 .share-wa:hover{background:#128c7e;transform:translateY(-2px)}
-
 .review-section{margin-top:20px}
 .review-section h3{font-size:1.1rem;margin-bottom:12px;font-weight:700}
 .review-item{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow);animation:fadeIn .3s}
@@ -116,5 +97,101 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .restart-btn{width:100%;padding:14px;border:2px solid var(--primary);border-radius:14px;background:transparent;color:var(--primary);font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s}
 .restart-btn:hover{background:var(--primary);color:#fff}
 .hidden{display:none!important}
-
-/* Confetti */
+.confetti{position:fixed;top:-10px;z-index:999;pointer-events:none;animation:confettiFall 3s linear forwards}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<div class="logo">
+<div class="logo-icon">🔬</div>
+<h1>HistoQuiz</h1>
+</div>
+<div class="header-btns">
+<button class="btn-sm" onclick="toggleTimer()" id="timerToggle">⏱️</button>
+<button class="btn-sm" onclick="toggleDark()" id="darkToggle">🌙</button>
+</div>
+</div>
+<div id="welcomeScreen">
+<div class="welcome">
+<div class="welcome-icon">🔬</div>
+<h2>Histology Practical Quiz</h2>
+<div class="subtitle">Blood Film Identification</div>
+<div class="features">
+<div class="feature"><span class="feature-icon">📸</span>5 Image Questions</div>
+<div class="feature"><span class="feature-icon">🎯</span>MCQ Format</div>
+<div class="feature"><span class="feature-icon">⚡</span>Instant Feedback</div>
+<div class="feature"><span class="feature-icon">📊</span>Score + Review</div>
+</div>
+<button class="start-btn" onclick="startQuiz()">▶️ Start Quiz</button>
+</div>
+</div>
+<div id="quizScreen" class="hidden">
+<div class="progress-section">
+<div class="progress-info">
+<span>Question <span id="qNum">1</span> of <span id="qTotal">5</span></span>
+<span class="timer-display" id="timerDisplay"></span>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="stats-row">
+<div class="stat-card"><div class="num score-num" id="scoreDisplay">0</div><div class="lbl">Score</div></div>
+<div class="stat-card"><div class="num correct-num" id="correctDisplay">0</div><div class="lbl">Correct</div></div>
+<div class="stat-card"><div class="num wrong-num" id="wrongDisplay">0</div><div class="lbl">Wrong</div></div>
+</div>
+<div class="question-card" id="questionCard">
+<div class="q-badge">Identify</div>
+<div class="q-title">What is this tissue / cell?</div>
+<div class="img-container" id="imgContainer">
+<img id="quizImg" src="" alt="Histology slide">
+<div class="blur-top" id="blurTop"></div>
+<div class="blur-mid" id="blurMid"></div>
+<div class="blur-bot" id="blurBot"></div>
+<div class="img-badge" id="imgBadge">🔍 Identify</div>
+</div>
+<div class="options" id="optionsDiv"></div>
+<div id="feedbackDiv" class="hidden"></div>
+<button class="next-btn hidden" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+</div>
+</div>
+<div id="resultsScreen" class="hidden">
+<div class="results-card">
+<h2>🎉 Quiz Complete!</h2>
+<div class="big-score" id="finalScore">0%</div>
+<div class="results-grid">
+<div class="r-stat"><div class="r-num" id="rTotal">0</div><div class="r-lbl">Total</div></div>
+<div class="r-stat"><div class="r-num pass" id="rCorrect">0</div><div class="r-lbl">Correct</div></div>
+<div class="r-stat"><div class="r-num fail" id="rWrong">0</div><div class="r-lbl">Wrong</div></div>
+</div>
+<div id="passFailMsg" style="font-size:1.3rem;font-weight:800;margin-top:12px"></div>
+</div>
+<div class="btn-group">
+<button class="share-wa" onclick="shareWhatsApp()">📱 Share on WhatsApp</button>
+<button class="next-btn" onclick="shareResults()">📤 Share Results</button>
+<button class="restart-btn" onclick="restartQuiz()">🔄 Try Again</button>
+</div>
+<div class="review-section">
+<h3>📝 Review All Questions</h3>
+<div id="reviewList"></div>
+</div>
+</div>
+</div>
+<script>
+const BASE='https://raw.githubusercontent.com/kemokeko511-ai/Hisoquiz/main/';
+const DATA=[
+{img:'Img1.jpg',label:'Blood film small lymphocyte',explanation:'Small round cell with dense dark nucleus occupying most of the cell, thin rim of basophilic cytoplasm. It is the smallest WBC seen in blood films. The nucleus-to-cytoplasm ratio is very high.'},
+{img:'Img2.jpg',label:'Blood film large lymphocyte',explanation:'Larger than small lymphocyte with more abundant pale blue cytoplasm. The nucleus is round with less condensed chromatin. May contain azurophilic granules (NK cells).'},
+{img:'Img3.jpg',label:'Blood film small & large lymphocytes',explanation:'Side-by-side comparison: small lymphocyte has minimal cytoplasm with dense dark nucleus, while large lymphocyte has more abundant cytoplasm and open (euchromatic) chromatin pattern.'},
+{img:'Img4.jpg',label:'Blood film monocyte',explanation:'The largest WBC in peripheral blood. Characterized by kidney/horseshoe-shaped nucleus with lacy chromatin pattern. Abundant pale blue-grey cytoplasm with fine azurophilic granules. Precursor of tissue macrophages.'},
+{img:'Img5.jpg',label:'Blood film leucocytes',explanation:'Overview showing mixed WBCs among RBCs and platelets. Includes neutrophils (multilobed nucleus), eosinophils (bilobed nucleus, red granules), lymphocytes (round dark nucleus), and monocytes (kidney-shaped nucleus).'}
+];
+let questions=[];let currentQ=0;let score=0;let correctCount=0;let wrongCount=0;let answers=[];let timerOn=false;let timerSeconds=0;let timerInterval=null;let answered=false;
+function toggleDark(){document.documentElement.classList.toggle('dark');const btn=document.getElementById('darkToggle');btn.textContent=document.documentElement.classList.contains('dark')?'☀️':'🌙'}
+function toggleTimer(){timerOn=!timerOn;const btn=document.getElementById('timerToggle');btn.classList.toggle('active',timerOn);if(timerOn){timerSeconds=0;timerInterval=setInterval(()=>{timerSeconds++;const m=Math.floor(timerSeconds/60);const s=timerSeconds%60;document.getElementById('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')},1000)}else{clearInterval(timerInterval);document.getElementById('timerDisplay').textContent=''}}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function startQuiz(){const allLabels=DATA.map(d=>d.label);questions=[];let shuffled=[...DATA];shuffle(shuffled);for(let item of shuffled){const correct=item.label;let wrongs=allLabels.filter(l=>l!==correct);shuffle(wrongs);wrongs=wrongs.slice(0,3);let options=[...wrongs,correct];shuffle(options);questions.push({imgSrc:BASE+item.img,label:correct,explanation:item.explanation,options:options,correctIndex:options.indexOf(correct)})}currentQ=0;score=0;correctCount=0;wrongCount=0;answers=[];document.getElementById('welcomeScreen').classList.add('hidden');document.getElementById('quizScreen').classList.remove('hidden');loadQuestion()}
+function loadQuestion(){answered=false;const q=questions[currentQ];document.getElementById('qNum').textContent=currentQ+1;document.getElementById('qTotal').textContent=questions.length;document.getElementById('progressFill').style.width=((currentQ/questions.length)*100)+'%';document.getElementById('scoreDisplay').textContent=score;document.getElementById('correctDisplay').textContent=correctCount;document.getElementById('wrongDisplay').textContent=wrongCount;document.getElementById('quizImg').src=q.imgSrc;document.getElementById('blurTop').classList.remove('blur-removed');document.getElementById('blurMid').classList.remove('blur-removed');document.getElementById('blurBot').classList.remove('blur-removed');document.getElementById('imgBadge').textContent='🔍 Identify';document.getElementById('imgBadge').style.background='rgba(0,0,0,.6)';const card=document.getElementById('questionCard');card.style.animation='none';card.offsetHeight;card.style.animation='slideUp .4s ease';const optDiv=document.getElementById('optionsDiv');optDiv.innerHTML='';const letters=['A','B','C','D'];q.options.forEach((opt,i)=>{const btn=document.createElement('button');btn.className='opt-btn';btn.innerHTML='<span class="opt-letter">'+letters[i]+'</span><span>'+opt+'</span>';btn.onclick=()=>selectAnswer(i);btn.style.animation='fadeIn '+(0.2+i*0.1)+'s ease';optDiv.appendChild(btn)});document.getElementById('feedbackDiv').className='hidden';document.getElementById('nextBtn').className='next-btn hidden'}
+function removeBlur(){document.getElementById('blurTop').classList.add('blur-removed');document.getElementById('blurMid').classList.add('blur-removed');document.getElementById('blurBot').classList.add('blur-removed');document.getElementById('imgBadge').textContent='✅ '+questions[currentQ].label;document.getElementById('imgBadge').style.background='rgba(22,163,74,.8)'}
+function spawnConfetti(){const colors=['#2563eb','#7c3aed','#16a34a','#f59e0b','#ec4899','#06b6d4'];for(let i=0;i<20;i++){const c=document.createElement('div');c.className='confetti';c.style.left=Math.random()*100+'vw';c.style.width=c.style.height=(Math.random()*8+4)+'px';c.style.background=colors[Math.floor(Math.random()*colors.length)];c.style.borderRadius=Math.random()>.5?'50%':'2px';c.style.animationDuration=(Math.random()*2+2)+'s';c.style.animationDelay=(Math.random()*0.5)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),4000)}}
+function selectAnswer(idx){if(answered)return;answered=true;const q=questions[currentQ];const isCorrect=idx===q.correctIndex;if(isCorrect){score++;correctCount++;spawnConfetti()}else{wrongCount++}removeBlur();document.getElementById('scoreDisplay').textContent=score;document.getElementById('correctDisplay').textContent=correctCount;document.getElementById('wrongDisplay').textContent=wrongCount;const btns=document.querySelectorAll('.opt-btn');btns.forEach((btn,i)=>{btn.disabled=true;if(i===q.correctIndex)btn.classList.add('correct');if(i===idx&&!isCorrect)btn.classList.add('wrong')});const fb=document.getElementById('feedbackDiv');fb.className='feedback '+(isCorrect?'correct-fb':'wron
