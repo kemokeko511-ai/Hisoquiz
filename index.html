@@ -3,195 +3,210 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HistoQuiz - Histology MCQ Exam</title>
+<title>HistoQuiz</title>
 <style>
-:root{--bg:#f0f4f8;--card:#fff;--text:#1a202c;--primary:#2563eb;--success:#16a34a;--danger:#dc2626;--muted:#64748b;--border:#e2e8f0;--shadow:0 4px 24px rgba(0,0,0,.08);--glow:0 0 30px rgba(37,99,235,.15)}
-.dark{--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--primary:#3b82f6;--border:#334155;--muted:#94a3b8;--shadow:0 4px 24px rgba(0,0,0,.4);--glow:0 0 30px rgba(59,130,246,.2)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:all .3s}
-.container{max-width:760px;margin:0 auto;padding:12px}
-.header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;margin-bottom:16px;background:var(--card);border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--border)}
-.logo{display:flex;align-items:center;gap:8px}
-.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
-.logo h1{font-size:1.2rem;font-weight:800;background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.header-btns{display:flex;gap:6px}
-.btn-sm{padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:.75rem;transition:all .2s;font-weight:600}
-.btn-sm:hover{border-color:var(--primary);background:rgba(37,99,235,.05)}
-.btn-sm.active{background:var(--primary);color:#fff;border-color:var(--primary)}
-.welcome{background:var(--card);border-radius:20px;padding:40px 24px;box-shadow:var(--shadow);border:1px solid var(--border);text-align:center;position:relative;overflow:hidden}
-.welcome::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(37,99,235,.03) 0%,transparent 70%);animation:pulse 4s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-.welcome-icon{font-size:4rem;margin-bottom:20px;animation:bounce 2s infinite}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.welcome h2{font-size:1.6rem;margin-bottom:8px;font-weight:800}
-.welcome .subtitle{color:var(--primary);font-weight:600;margin-bottom:16px;font-size:.95rem}
-.welcome p{color:var(--muted);font-size:.85rem;margin-bottom:24px;line-height:1.7}
-.features{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:24px;text-align:left}
-.feature{display:flex;align-items:center;gap:8px;padding:10px 12px;background:rgba(37,99,235,.04);border-radius:10px;font-size:.8rem;font-weight:500}
-.feature-icon{font-size:1.1rem}
-.start-btn{padding:16px 48px;border:none;border-radius:14px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 4px 15px rgba(37,99,235,.3);position:relative;z-index:1}
-.start-btn:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(37,99,235,.4)}
-.start-btn:active{transform:translateY(0)}
-.progress-section{margin-bottom:12px}
-.progress-info{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);margin-bottom:6px;font-weight:500}
-.progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:3px;transition:width .5s ease}
-.stats-row{display:flex;gap:8px;margin-bottom:12px}
-.stat-card{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center;box-shadow:var(--shadow);transition:all .3s}
-.stat-card .num{font-size:1.4rem;font-weight:800}
-.stat-card .lbl{font-size:.65rem;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
-.score-num{color:var(--primary)}.correct-num{color:var(--success)}.wrong-num{color:var(--danger)}
-.question-card{background:var(--card);border-radius:20px;padding:20px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:16px;animation:slideUp .4s ease}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.q-badge{display:inline-block;padding:4px 12px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-radius:20px;font-size:.7rem;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-.q-title{font-size:1.1rem;font-weight:700;margin-bottom:16px}
-.img-container{position:relative;width:100%;margin-bottom:16px;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#f8fafc,#e2e8f0);box-shadow:inset 0 2px 10px rgba(0,0,0,.05)}
-.dark .img-container{background:linear-gradient(135deg,#1e293b,#0f172a)}
-.img-container img{width:100%;min-height:250px;max-height:500px;object-fit:contain;display:block;padding:8px;transition:all .3s}
-.blur-top{position:absolute;top:0;left:0;right:0;height:16%;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);background:rgba(0,0,0,.08);z-index:2;pointer-events:none;transition:all .6s ease}
-.blur-mid{position:absolute;top:38%;left:5%;width:90%;height:18%;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);background:rgba(0,0,0,.05);z-index:2;pointer-events:none;border-radius:12px;transition:all .6s ease}
-.blur-bot{position:absolute;bottom:0;left:0;right:0;height:16%;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);background:rgba(0,0,0,.08);z-index:2;pointer-events:none;transition:all .6s ease}
-.blur-removed{backdrop-filter:blur(0)!important;-webkit-backdrop-filter:blur(0)!important;background:transparent!important}
-.img-badge{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;padding:4px 10px;border-radius:8px;font-size:.7rem;z-index:3;font-weight:600}
-.options{display:grid;gap:8px}
-.opt-btn{padding:14px 16px;border:2px solid var(--border);border-radius:14px;background:var(--card);color:var(--text);font-size:.9rem;cursor:pointer;text-align:left;transition:all .25s;display:flex;align-items:center;gap:12px;font-weight:500;position:relative;overflow:hidden}
-.opt-btn::before{content:'';position:absolute;top:0;left:0;width:0;height:100%;background:rgba(37,99,235,.05);transition:width .3s}
-.opt-btn:hover:not(:disabled)::before{width:100%}
-.opt-btn:hover:not(:disabled){border-color:var(--primary);transform:translateX(6px)}
-.opt-btn:disabled{cursor:default}
-.opt-btn.correct{border-color:var(--success);background:rgba(22,163,74,.08);animation:correctPulse .5s}
-.opt-btn.wrong{border-color:var(--danger);background:rgba(220,38,38,.08);animation:wrongShake .5s}
-@keyframes correctPulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
-@keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-.opt-letter{width:32px;height:32px;border-radius:10px;background:var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0;transition:all .3s}
-.correct .opt-letter{background:var(--success);color:#fff;transform:scale(1.1)}
-.wrong .opt-letter{background:var(--danger);color:#fff}
-.feedback{margin-top:16px;padding:16px;border-radius:14px;border:1px solid var(--border);animation:fadeIn .4s}
-.feedback.correct-fb{background:rgba(22,163,74,.06);border-color:var(--success)}
-.feedback.wrong-fb{background:rgba(220,38,38,.06);border-color:var(--danger)}
-.feedback h4{margin-bottom:6px;font-size:1.05rem}
-.feedback p{font-size:.82rem;color:var(--muted);line-height:1.6}
-.feedback .answer-label{color:var(--text);font-weight:700;font-size:.9rem}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.next-btn{width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:1rem;font-weight:700;cursor:pointer;margin-top:14px;transition:all .3s;box-shadow:0 4px 15px rgba(37,99,235,.2)}
-.next-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,99,235,.3)}
-.results-card{background:var(--card);border-radius:20px;padding:32px 24px;box-shadow:var(--shadow);border:1px solid var(--border);text-align:center;margin-bottom:16px;position:relative;overflow:hidden}
-.results-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(37,99,235,.04) 0%,transparent 70%)}
-.results-card h2{font-size:1.5rem;margin-bottom:20px;font-weight:800}
-.big-score{font-size:4rem;font-weight:900;background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
-.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0}
-.r-stat{padding:16px;border-radius:14px;border:1px solid var(--border);background:rgba(37,99,235,.02)}
-.r-stat .r-num{font-size:1.6rem;font-weight:800}
-.r-stat .r-lbl{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
-.pass{color:var(--success)}.fail{color:var(--danger)}
-.btn-group{display:grid;gap:8px;margin-bottom:16px}
-.share-wa{padding:14px;border:none;border-radius:14px;background:#25d366;color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s}
-.share-wa:hover{background:#128c7e;transform:translateY(-2px)}
-.review-section{margin-top:20px}
-.review-section h3{font-size:1.1rem;margin-bottom:12px;font-weight:700}
-.review-item{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow);animation:fadeIn .3s}
-.review-item.r-correct{border-left:4px solid var(--success)}
-.review-item.r-wrong{border-left:4px solid var(--danger)}
-.review-item img{width:100%;max-height:220px;object-fit:contain;border-radius:10px;margin:8px 0}
-.review-item .r-label{font-size:.82rem;margin:4px 0;line-height:1.5}
-.restart-btn{width:100%;padding:14px;border:2px solid var(--primary);border-radius:14px;background:transparent;color:var(--primary);font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s}
-.restart-btn:hover{background:var(--primary);color:#fff}
-.hidden{display:none!important}
-.confetti{position:fixed;top:-10px;z-index:999;pointer-events:none;animation:confettiFall 3s linear forwards}
-@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+body{font-family:Arial,sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;padding:16px}
+.box{max-width:600px;margin:0 auto}
+h1{text-align:center;font-size:1.5rem;margin-bottom:16px;color:#3b82f6}
+.card{background:#1e293b;border-radius:16px;padding:20px;margin-bottom:16px;border:1px solid #334155}
+.score-row{display:flex;gap:8px;margin-bottom:12px;text-align:center}
+.score-row div{flex:1;background:#1e293b;padding:10px;border-radius:10px;border:1px solid #334155}
+.score-row .n{font-size:1.3rem;font-weight:bold}
+.blue{color:#3b82f6}.green{color:#16a34a}.red{color:#dc2626}
+.prog{height:6px;background:#334155;border-radius:3px;margin-bottom:16px;overflow:hidden}
+.prog-fill{height:100%;background:#3b82f6;border-radius:3px;transition:width .4s}
+.img-box{position:relative;border-radius:12px;overflow:hidden;margin-bottom:16px;background:#000}
+.img-box img{width:100%;max-height:450px;object-fit:contain;display:block}
+.blur-cover{position:absolute;top:0;left:0;right:0;height:17%;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(0,0,0,.1);z-index:2;transition:all .5s}
+.blur-cover.off{backdrop-filter:none;-webkit-backdrop-filter:none;background:transparent}
+.opts{display:grid;gap:8px}
+.opt{padding:14px;border:2px solid #334155;border-radius:12px;background:#1e293b;color:#f1f5f9;font-size:.9rem;cursor:pointer;text-align:left;transition:all .2s}
+.opt:hover{border-color:#3b82f6}
+.opt.correct{border-color:#16a34a;background:rgba(22,163,74,.15)}
+.opt.wrong{border-color:#dc2626;background:rgba(220,38,38,.15)}
+.opt:disabled{cursor:default}
+.fb{margin-top:14px;padding:14px;border-radius:12px;border:1px solid #334155}
+.fb.ok{background:rgba(22,163,74,.1);border-color:#16a34a}
+.fb.no{background:rgba(220,38,38,.1);border-color:#dc2626}
+.fb h4{margin-bottom:4px}
+.fb p{font-size:.82rem;color:#94a3b8;line-height:1.5}
+.btn{width:100%;padding:14px;border:none;border-radius:12px;background:#3b82f6;color:#fff;font-size:1rem;font-weight:bold;cursor:pointer;margin-top:12px}
+.btn:hover{background:#2563eb}
+.btn2{width:100%;padding:14px;border:2px solid #3b82f6;border-radius:12px;background:transparent;color:#3b82f6;font-size:1rem;font-weight:bold;cursor:pointer;margin-top:8px}
+.hide{display:none}
+.rev-item{background:#1e293b;border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid #334155}
+.rev-item.rok{border-left:4px solid #16a34a}
+.rev-item.rno{border-left:4px solid #dc2626}
+.rev-item img{width:100%;max-height:180px;object-fit:contain;border-radius:8px;margin:8px 0}
+.rev-item p{font-size:.8rem;color:#94a3b8;margin:3px 0}
 </style>
 </head>
 <body>
-<div class="container">
-<div class="header">
-<div class="logo">
-<div class="logo-icon">🔬</div>
-<h1>HistoQuiz</h1>
-</div>
-<div class="header-btns">
-<button class="btn-sm" onclick="toggleTimer()" id="timerToggle">⏱️</button>
-<button class="btn-sm" onclick="toggleDark()" id="darkToggle">🌙</button>
-</div>
-</div>
-<div id="welcomeScreen">
-<div class="welcome">
-<div class="welcome-icon">🔬</div>
-<h2>Histology Practical Quiz</h2>
-<div class="subtitle">Blood Film Identification</div>
-<div class="features">
-<div class="feature"><span class="feature-icon">📸</span>5 Image Questions</div>
-<div class="feature"><span class="feature-icon">🎯</span>MCQ Format</div>
-<div class="feature"><span class="feature-icon">⚡</span>Instant Feedback</div>
-<div class="feature"><span class="feature-icon">📊</span>Score + Review</div>
-</div>
-<button class="start-btn" onclick="startQuiz()">▶️ Start Quiz</button>
+<div class="box">
+<h1>🔬 HistoQuiz</h1>
+<div id="home">
+<div class="card" style="text-align:center">
+<div style="font-size:3rem;margin-bottom:12px">🔬</div>
+<h2 style="margin-bottom:8px">Histology Quiz</h2>
+<p style="color:#94a3b8;margin-bottom:8px">Blood Film Identification</p>
+<p style="color:#94a3b8;font-size:.85rem;margin-bottom:20px">5 MCQ Questions • Instant Feedback • Score + Review</p>
+<button class="btn" onclick="start()">▶️ Start Quiz</button>
 </div>
 </div>
-<div id="quizScreen" class="hidden">
-<div class="progress-section">
-<div class="progress-info">
-<span>Question <span id="qNum">1</span> of <span id="qTotal">5</span></span>
-<span class="timer-display" id="timerDisplay"></span>
+<div id="quiz" class="hide">
+<div style="font-size:.82rem;color:#94a3b8;margin-bottom:4px">Question <span id="qn">1</span>/5</div>
+<div class="prog"><div class="prog-fill" id="pf" style="width:0%"></div></div>
+<div class="score-row">
+<div><div class="n blue" id="sc">0</div><div style="font-size:.65rem;color:#94a3b8">Score</div></div>
+<div><div class="n green" id="cr">0</div><div style="font-size:.65rem;color:#94a3b8">Correct</div></div>
+<div><div class="n red" id="wr">0</div><div style="font-size:.65rem;color:#94a3b8">Wrong</div></div>
 </div>
-<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="card">
+<div style="font-size:.8rem;color:#94a3b8;margin-bottom:4px">Identify the tissue/cell:</div>
+<div style="font-weight:bold;margin-bottom:12px">What is this tissue/cell?</div>
+<div class="img-box">
+<img id="qi" src="" alt="slide">
+<div class="blur-cover" id="bl"></div>
 </div>
-<div class="stats-row">
-<div class="stat-card"><div class="num score-num" id="scoreDisplay">0</div><div class="lbl">Score</div></div>
-<div class="stat-card"><div class="num correct-num" id="correctDisplay">0</div><div class="lbl">Correct</div></div>
-<div class="stat-card"><div class="num wrong-num" id="wrongDisplay">0</div><div class="lbl">Wrong</div></div>
-</div>
-<div class="question-card" id="questionCard">
-<div class="q-badge">Identify</div>
-<div class="q-title">What is this tissue / cell?</div>
-<div class="img-container" id="imgContainer">
-<img id="quizImg" src="" alt="Histology slide">
-<div class="blur-top" id="blurTop"></div>
-<div class="blur-mid" id="blurMid"></div>
-<div class="blur-bot" id="blurBot"></div>
-<div class="img-badge" id="imgBadge">🔍 Identify</div>
-</div>
-<div class="options" id="optionsDiv"></div>
-<div id="feedbackDiv" class="hidden"></div>
-<button class="next-btn hidden" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+<div class="opts" id="opts"></div>
+<div id="fb" class="hide"></div>
+<button class="btn hide" id="nb" onclick="next()">Next →</button>
 </div>
 </div>
-<div id="resultsScreen" class="hidden">
-<div class="results-card">
+<div id="res" class="hide">
+<div class="card" style="text-align:center">
 <h2>🎉 Quiz Complete!</h2>
-<div class="big-score" id="finalScore">0%</div>
-<div class="results-grid">
-<div class="r-stat"><div class="r-num" id="rTotal">0</div><div class="r-lbl">Total</div></div>
-<div class="r-stat"><div class="r-num pass" id="rCorrect">0</div><div class="r-lbl">Correct</div></div>
-<div class="r-stat"><div class="r-num fail" id="rWrong">0</div><div class="r-lbl">Wrong</div></div>
+<div style="font-size:3rem;font-weight:900;color:#3b82f6;margin:12px 0" id="fs">0%</div>
+<div class="score-row">
+<div><div class="n" id="rt">0</div><div style="font-size:.65rem;color:#94a3b8">Total</div></div>
+<div><div class="n green" id="rc">0</div><div style="font-size:.65rem;color:#94a3b8">Correct</div></div>
+<div><div class="n red" id="rw">0</div><div style="font-size:.65rem;color:#94a3b8">Wrong</div></div>
 </div>
-<div id="passFailMsg" style="font-size:1.3rem;font-weight:800;margin-top:12px"></div>
+<div id="msg" style="font-size:1.2rem;font-weight:bold;margin-top:8px"></div>
 </div>
-<div class="btn-group">
-<button class="share-wa" onclick="shareWhatsApp()">📱 Share on WhatsApp</button>
-<button class="next-btn" onclick="shareResults()">📤 Share Results</button>
-<button class="restart-btn" onclick="restartQuiz()">🔄 Try Again</button>
-</div>
-<div class="review-section">
-<h3>📝 Review All Questions</h3>
-<div id="reviewList"></div>
-</div>
+<button class="btn" onclick="swa()">📱 Share WhatsApp</button>
+<button class="btn2" onclick="re()">🔄 Try Again</button>
+<h3 style="margin-top:20px;margin-bottom:12px">📝 Review</h3>
+<div id="rv"></div>
 </div>
 </div>
 <script>
-const BASE='https://raw.githubusercontent.com/kemokeko511-ai/Hisoquiz/main/';
-const DATA=[
-{img:'Img1.jpg',label:'Blood film small lymphocyte',explanation:'Small round cell with dense dark nucleus occupying most of the cell, thin rim of basophilic cytoplasm. It is the smallest WBC seen in blood films. The nucleus-to-cytoplasm ratio is very high.'},
-{img:'Img2.jpg',label:'Blood film large lymphocyte',explanation:'Larger than small lymphocyte with more abundant pale blue cytoplasm. The nucleus is round with less condensed chromatin. May contain azurophilic granules (NK cells).'},
-{img:'Img3.jpg',label:'Blood film small & large lymphocytes',explanation:'Side-by-side comparison: small lymphocyte has minimal cytoplasm with dense dark nucleus, while large lymphocyte has more abundant cytoplasm and open (euchromatic) chromatin pattern.'},
-{img:'Img4.jpg',label:'Blood film monocyte',explanation:'The largest WBC in peripheral blood. Characterized by kidney/horseshoe-shaped nucleus with lacy chromatin pattern. Abundant pale blue-grey cytoplasm with fine azurophilic granules. Precursor of tissue macrophages.'},
-{img:'Img5.jpg',label:'Blood film leucocytes',explanation:'Overview showing mixed WBCs among RBCs and platelets. Includes neutrophils (multilobed nucleus), eosinophils (bilobed nucleus, red granules), lymphocytes (round dark nucleus), and monocytes (kidney-shaped nucleus).'}
+var B='https://raw.githubusercontent.com/kemokeko511-ai/Hisoquiz/main/';
+var D=[
+{i:'Img1.jpg',l:'Blood film small lymphocyte',e:'Small round cell with dense dark nucleus occupying most of the cell, thin rim of basophilic cytoplasm. Smallest WBC.'},
+{i:'Img2.jpg',l:'Blood film large lymphocyte',e:'Larger than small lymphocyte with more abundant pale blue cytoplasm. Round nucleus with less condensed chromatin.'},
+{i:'Img3.jpg',l:'Blood film small & large lymphocytes',e:'Comparison: small has minimal cytoplasm with dense nucleus, large has more cytoplasm and open chromatin.'},
+{i:'Img4.jpg',l:'Blood film monocyte',e:'Largest WBC. Kidney/horseshoe-shaped nucleus, abundant pale blue-grey cytoplasm with fine granules.'},
+{i:'Img5.jpg',l:'Blood film leucocytes',e:'Mixed WBCs among RBCs. Neutrophils, eosinophils, lymphocytes, and monocytes visible.'}
 ];
-let questions=[];let currentQ=0;let score=0;let correctCount=0;let wrongCount=0;let answers=[];let timerOn=false;let timerSeconds=0;let timerInterval=null;let answered=false;
-function toggleDark(){document.documentElement.classList.toggle('dark');const btn=document.getElementById('darkToggle');btn.textContent=document.documentElement.classList.contains('dark')?'☀️':'🌙'}
-function toggleTimer(){timerOn=!timerOn;const btn=document.getElementById('timerToggle');btn.classList.toggle('active',timerOn);if(timerOn){timerSeconds=0;timerInterval=setInterval(()=>{timerSeconds++;const m=Math.floor(timerSeconds/60);const s=timerSeconds%60;document.getElementById('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')},1000)}else{clearInterval(timerInterval);document.getElementById('timerDisplay').textContent=''}}
-function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function startQuiz(){const allLabels=DATA.map(d=>d.label);questions=[];let shuffled=[...DATA];shuffle(shuffled);for(let item of shuffled){const correct=item.label;let wrongs=allLabels.filter(l=>l!==correct);shuffle(wrongs);wrongs=wrongs.slice(0,3);let options=[...wrongs,correct];shuffle(options);questions.push({imgSrc:BASE+item.img,label:correct,explanation:item.explanation,options:options,correctIndex:options.indexOf(correct)})}currentQ=0;score=0;correctCount=0;wrongCount=0;answers=[];document.getElementById('welcomeScreen').classList.add('hidden');document.getElementById('quizScreen').classList.remove('hidden');loadQuestion()}
-function loadQuestion(){answered=false;const q=questions[currentQ];document.getElementById('qNum').textContent=currentQ+1;document.getElementById('qTotal').textContent=questions.length;document.getElementById('progressFill').style.width=((currentQ/questions.length)*100)+'%';document.getElementById('scoreDisplay').textContent=score;document.getElementById('correctDisplay').textContent=correctCount;document.getElementById('wrongDisplay').textContent=wrongCount;document.getElementById('quizImg').src=q.imgSrc;document.getElementById('blurTop').classList.remove('blur-removed');document.getElementById('blurMid').classList.remove('blur-removed');document.getElementById('blurBot').classList.remove('blur-removed');document.getElementById('imgBadge').textContent='🔍 Identify';document.getElementById('imgBadge').style.background='rgba(0,0,0,.6)';const card=document.getElementById('questionCard');card.style.animation='none';card.offsetHeight;card.style.animation='slideUp .4s ease';const optDiv=document.getElementById('optionsDiv');optDiv.innerHTML='';const letters=['A','B','C','D'];q.options.forEach((opt,i)=>{const btn=document.createElement('button');btn.className='opt-btn';btn.innerHTML='<span class="opt-letter">'+letters[i]+'</span><span>'+opt+'</span>';btn.onclick=()=>selectAnswer(i);btn.style.animation='fadeIn '+(0.2+i*0.1)+'s ease';optDiv.appendChild(btn)});document.getElementById('feedbackDiv').className='hidden';document.getElementById('nextBtn').className='next-btn hidden'}
-function removeBlur(){document.getElementById('blurTop').classList.add('blur-removed');document.getElementById('blurMid').classList.add('blur-removed');document.getElementById('blurBot').classList.add('blur-removed');document.getElementById('imgBadge').textContent='✅ '+questions[currentQ].label;document.getElementById('imgBadge').style.background='rgba(22,163,74,.8)'}
-function spawnConfetti(){const colors=['#2563eb','#7c3aed','#16a34a','#f59e0b','#ec4899','#06b6d4'];for(let i=0;i<20;i++){const c=document.createElement('div');c.className='confetti';c.style.left=Math.random()*100+'vw';c.style.width=c.style.height=(Math.random()*8+4)+'px';c.style.background=colors[Math.floor(Math.random()*colors.length)];c.style.borderRadius=Math.random()>.5?'50%':'2px';c.style.animationDuration=(Math.random()*2+2)+'s';c.style.animationDelay=(Math.random()*0.5)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),4000)}}
-function selectAnswer(idx){if(answered)return;answered=true;const q=questions[currentQ];const isCorrect=idx===q.correctIndex;if(isCorrect){score++;correctCount++;spawnConfetti()}else{wrongCount++}removeBlur();document.getElementById('scoreDisplay').textContent=score;document.getElementById('correctDisplay').textContent=correctCount;document.getElementById('wrongDisplay').textContent=wrongCount;const btns=document.querySelectorAll('.opt-btn');btns.forEach((btn,i)=>{btn.disabled=true;if(i===q.correctIndex)btn.classList.add('correct');if(i===idx&&!isCorrect)btn.classList.add('wrong')});const fb=document.getElementById('feedbackDiv');fb.className='feedback '+(isCorrect?'correct-fb':'wron
+var Q=[],C=0,S=0,CC=0,WC=0,A=[],AN=false;
+function sh(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function start(){
+var al=D.map(function(x){return x.l});
+Q=[];
+var sd=D.slice();
+sh(sd);
+for(var k=0;k<sd.length;k++){
+var it=sd[k];
+var co=it.l;
+var wr=al.filter(function(x){return x!==co});
+sh(wr);
+wr=wr.slice(0,3);
+var op=wr.concat([co]);
+sh(op);
+Q.push({src:B+it.i,l:co,e:it.e,o:op,ci:op.indexOf(co)});
+}
+C=0;S=0;CC=0;WC=0;A=[];
+document.getElementById('home').className='hide';
+document.getElementById('quiz').className='';
+load();
+}
+function load(){
+AN=false;
+var q=Q[C];
+document.getElementById('qn').textContent=C+1;
+document.getElementById('pf').style.width=(C/Q.length*100)+'%';
+document.getElementById('sc').textContent=S;
+document.getElementById('cr').textContent=CC;
+document.getElementById('wr').textContent=WC;
+document.getElementById('qi').src=q.src;
+document.getElementById('bl').classList.remove('off');
+var od=document.getElementById('opts');
+od.innerHTML='';
+var lt=['A','B','C','D'];
+for(var i=0;i<q.o.length;i++){
+var b=document.createElement('button');
+b.className='opt';
+b.textContent=lt[i]+') '+q.o[i];
+b.setAttribute('data-i',i);
+b.onclick=function(){pick(parseInt(this.getAttribute('data-i')))};
+od.appendChild(b);
+}
+document.getElementById('fb').className='hide';
+document.getElementById('nb').className='btn hide';
+}
+function pick(idx){
+if(AN)return;
+AN=true;
+var q=Q[C];
+var ok=idx===q.ci;
+if(ok){S++;CC++}else{WC++}
+document.getElementById('bl').classList.add('off');
+document.getElementById('sc').textContent=S;
+document.getElementById('cr').textContent=CC;
+document.getElementById('wr').textContent=WC;
+var bs=document.querySelectorAll('.opt');
+for(var i=0;i<bs.length;i++){
+bs[i].disabled=true;
+if(i===q.ci)bs[i].classList.add('correct');
+if(i===idx&&!ok)bs[i].classList.add('wrong');
+}
+var f=document.getElementById('fb');
+f.className='fb '+(ok?'ok':'no');
+f.innerHTML='<h4>'+(ok?'✅ Correct!':'❌ Incorrect')+'</h4><p><b>'+q.l+'</b></p><p>'+q.e+'</p>';
+A.push({l:q.l,s:q.o[idx],ok:ok,src:q.src,e:q.e});
+var nb=document.getElementById('nb');
+nb.className='btn';
+nb.textContent=C+1>=Q.length?'📊 Results':'Next →';
+}
+function next(){
+C++;
+if(C>=Q.length){results()}else{load()}
+}
+function results(){
+document.getElementById('quiz').className='hide';
+document.getElementById('res').className='';
+var t=Q.length;
+var p=Math.round(CC/t*100);
+document.getElementById('fs').textContent=p+'%';
+document.getElementById('rt').textContent=t;
+document.getElementById('rc').textContent=CC;
+document.getElementById('rw').textContent=WC;
+var m=document.getElementById('msg');
+if(p>=80){m.textContent='🏆 Excellent!';m.style.color='#16a34a'}
+else if(p>=60){m.textContent='👍 Good!';m.style.color='#3b82f6'}
+else{m.textContent='💪 Try again!';m.style.color='#dc2626'}
+var rv=document.getElementById('rv');
+rv.innerHTML='';
+for(var i=0;i<A.length;i++){
+var a=A[i];
+var d=document.createElement('div');
+d.className='rev-item '+(a.ok?'rok':'rno');
+d.innerHTML='<p><b>Q'+(i+1)+':</b> '+(a.ok?'✅':'❌')+' '+a.l+'</p><img src="'+a.src+'"><p>You: <b>'+a.s+'</b></p><p>Correct: <b style="color:#16a34a">'+a.l+'</b></p><p>'+a.e+'</p>';
+rv.appendChild(d);
+}
+}
+function swa(){
+var t=Q.length;
+var p=Math.round(CC/t*100);
+var tx='🔬 HistoQuiz: '+CC+'/'+t+' ('+p+'%)'+'\nTry: https://kemokeko511-ai.github.io/Hisoquiz';
+window.open('https://wa.me/?text='+encodeURIComponent(tx));
+}
+function re(){
+document.getElementById('res').className='hide';
+document.getElementById('home').className='';
+}
+</script>
+</body>
+</html>
